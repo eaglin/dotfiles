@@ -1,0 +1,32 @@
+# GitHub Copilot (contiene tokens y secretos)
+github-copilot/
+
+# Archivos de sistema
+.DS_Store
+
+# Configuraciones que pueden contener secretos
+configstore/
+atuin/
+
+# Plugins de tmux (repositorios externos)
+tmux/plugins/
+
+# Raycast (extensiones y configuraciones locales)
+raycast/
+
+# Backups
+nvim.bak/
+sketchybar_backu/
+sketchybar_backup_lua/
+*_backup/
+*_backu/
+*.backup
+
+# Archivos generados de Neovim
+nvim/lazy-lock.json
+nvim/.neoconf.json
+
+# Archivos temporales
+*.tmp
+*.out
+*.log

@@ -1,0 +1,124 @@
+
+#!/bin/bash
+# This is a demo config to showcase some of the most important commands.
+# It is meant to be changed and configured, as it is intentionally kept sparse.
+# For a (much) more advanced configuration example see my dotfiles:
+# https://github.com/FelixKratz/dotfiles
+source "$HOME/.config/sketchybar/icons.sh" # Loads all defined colors
+CONFIG_DIR="$HOME/.config/sketchybar"
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+ITEMS_DIR="$CONFIG_DIR/items"
+FONT="JetBrains Mono"
+source "$CONFIG_DIR/colors.sh" # Loads all defined colors
+
+##### Bar Appearance #####
+# Configuring the general appearance of the bar.
+# These are only some of the options available. For all options see:
+# https://felixkratz.github.io/SketchyBar/config/bar
+# If you are looking for other colors, see the color picker:
+# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
+bar=(
+  position=top
+  height=40
+  color=$TRANSPARENT
+  padding_left=10
+  padding_right=10
+  y_offset=5
+  shadow=on
+
+)
+
+sketchybar --bar "${bar[@]}" 
+##### Changing Defaults #####
+# We now change some default values, which are applied to all further items.
+# For a full list of all available item properties see:
+# https://felixkratz.github.io/SketchyBar/config/items
+
+default=(
+  padding_left=5
+  padding_right=5
+  icon.font="Hack Nerd Font:Bold:14.0"
+  label.font="Hack Nerd Font:Bold:14.0"
+  icon.color=$TEXT
+  label.color=$TEXT
+  icon.padding_left=4
+  icon.padding_right=4
+  label.padding_left=4
+  label.padding_right=4
+  background.height=28
+  popup.background.corner_radius=0
+  popup.background.color=$BASE
+  popup.background.border_color=$ROSE
+  popup.background.border_width=1
+)
+sketchybar --default "${default[@]}"
+
+#####AEROSPACE#####
+source "$CONFIG_DIR/items/aerospaces.sh"
+# source "$CONFIG_DIR/items/front_app.sh"
+# 
+
+##### Adding Left Items #####
+# We add some regular items to the left side of the bar, where
+# only the properties deviating from the current defaults need to be set
+
+##### Adding Right Items #####
+# Items
+
+# sketchybar   --add item  ip_address right                              \
+#            --set       ip_address script="$PLUGIN_DIR/ip_address.sh" \
+#                                   update_freq=30                     \
+#                                   padding_left=2                     \
+#                                   padding_right=8                    \
+#                                   background.border_width=0          \
+#                                   background.corner_radius=6         \
+#                                   background.height=24               \
+#                                   icon.highlight=on                  \
+#                                   label.highlight=on                 \
+#            --subscribe ip_address wifi_change                        \
+#            --add item  network.up right                              \
+#            --set       network.up script="$PLUGIN_DIR/network.sh"    \
+#                                   update_freq=20                     \
+#                                   padding_left=2                     \
+#                                   padding_right=2                    \
+#                                   background.border_width=0          \
+#                                   background.height=24               \
+#                                   icon=⇡                             \
+#                                   icon.color=$YELLOW                 \
+#                                   label.color=$YELLOW                \
+#            --add item  network.down right                            \
+#            --set       network.down script="$PLUGIN_DIR/network.sh"  \
+#                                update_freq=20                        \
+#                                padding_left=8                        \
+#                                padding_right=2                       \
+#                                background.border_width=0             \
+#                                background.height=24                  \
+#                                icon=⇣                                \
+#                                icon.color=$LOVE \
+#                                label.color=$LOVE
+#
+# # Bracket
+#
+source "$CONFIG_DIR/items/clock.sh"
+source "$CONFIG_DIR/items/battery.sh"
+source "$CONFIG_DIR/items/volume.sh"
+source "$CONFIG_DIR/items/bluetooth.sh"
+source "$CONFIG_DIR/items/wifi.sh"
+# source "$CONFIG_DIR/items/network.sh"
+
+sketchybar --add bracket status battery volume wifi  bt \
+           --set         status background.color=$IRIS_TRANSPARENT \
+                                background.border_color=$IRIS \
+                                background.border_width=1 \
+                                background.height=26 \
+
+sketchybar --add bracket spaces space.1 space.2 space.3 space.4 space.5 \
+  --set spaces \
+  background.drawing=on \
+  background.color=$IRIS_TRANSPARENT \
+  background.height=26 \
+  background.border_width=1 \
+  background.border_color=$IRIS \
+##### Force all scripts to run the first time (never do this in a script) #####
+sketchybar --update
+sketchybar --hotload true
