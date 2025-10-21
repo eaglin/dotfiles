@@ -1,0 +1,141 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+  nnoremap <leader>cr :action IdeaVim.ReloadVimRc.reload<CR>
+
+"" -- Suggested options --
+
+
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+set timeoutlen=6000    " 2 segundOs
+
+
+" Do incremental searching.
+set incsearch
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/argtextobj.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'machakann/vim-highlightedyank'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'preservim/nerdtree'
+Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-surround'
+set functiontextobj
+set mini-ai
+set which-key
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+set incsearch
+set relativenumber
+set number
+syntax on
+
+let mapleader = " "
+" ------------------------------
+" Project Tree (como nvim-tree)
+" ------------------------------
+" Abrir/cerrar el panel del Project Tool Window con <leader>e
+" Toggle focus en el explorer con Ctrl+e
+
+" Cuando estés en el Project Tree:
+" - Usa j/k para navegar arriba/abajo
+" - Usa l o Enter para expandir carpetas o abrir archivos
+" - Usa h para colapsar carpetas o ir a la carpeta padre
+" - Usa Escape para volver al editor desde el árbol
+
+map <leader>f <Action>(GotoFile)
+map <leader>/ <Action>(FindInPath)
+map <leader>b <Action>(Switcher)
+map <leader><leader> <Action>(GotoFile)
+map <leader>e :NERDTreeToggle<CR>
+" Patrón: {modo}noremap {tecla} :action {NombreAccion}<CR>
+
+" Ejemplos correctos:
+nnoremap <leader>p :action WelcomeScreen.Plugins<CR>
+nnoremap <leader>s :action ShowSettings<CR>
+nnoremap <leader>f :action ReformatCode<CR>
+"" === NAVEGACIÓN ENTRE SPLITS ===
+ " Ctrl + hjkl para moverse entre ventanas
+ nnoremap <C-h> :action PrevSplitter<CR>
+ nnoremap <C-l> :action NextSplitter<CR>
+
+ " === CREAR SPLITS ===
+ nnoremap <leader>v :action SplitVertically<CR>
+ nnoremap <leader>d :action SplitHorizontally<CR>
+
+ " === CERRAR SPLITS ===
+ nnoremap <C-w>q :action CloseContent<CR>
+nnoremap <C-w>o :action HideAllWindows<CR>
+" Next Tab and Previous Tab
+nnoremap <S-l> :tabnext<CR>
+nnoremap <S-h> :tabprevious<CR>
+nnoremap <leader>wn :tabnew<CR>
+nnoremap <leader>wo :tabonly<CR>
+ncoremap <leader>t :action ActivateTerminalToolWindow<CR>
+"Ocultar todas las ventanas menos el editor
+
+nnoremap <Esc><Esc> :action HideAllActiveWindow<CR>
+" Save, Quit, etc.
+nnoremap <leader>w :w!<CR>
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>x :x!<CR>
+" Toggle breakpoint
+nnoremap <leader>db :action ToggleLineBreakpoint<CR>
+
+" Start debugging (Shift+F9 por defecto)
+nnoremap <leader>ds :action Debug<CR>
+
+" Step over (F8)
+nnoremap <leader>do :action StepOver<CR>
+
+" Step into (F7)
+nnoremap <leader>di :action StepInto<CR>
+
+" Step out (Shift+F8)
+nnoremap <leader>dO :action StepOut<CR>
+
+" Resume program (F9)
+nnoremap <leader>dr :action Resume<CR>
+
+" Stop debugging (Ctrl+F2)
+nnoremap <leader>ds :action Stop<CR>
+
+" Evaluate expression
+noremap <leader>de :action EvaluateExpression<CR>
+
+" Show debug window
+nnoremap <leader>dw :action DebugToolWindow<CR>
+" Apply HotSwap
+nnoremap <leader>dh :action HotSwap<CR>
+
+" Refactorizacion de código
+nnoremap <leader>rr :action RefactorThis<CR>
+nnoremap <leader>rn :action RenameElement<CR>
+nnoremap <leader>cm :action IntroduceVariable<CR>
+nnoremap <leader>cf :action IntroduceField<CR>
+nnoremap <leader>cp :action IntroduceParameter<CR>
+nnoremap <leader>ra :action Refactorings.QuickListPopupAction<CR>
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+
+
+" Errores y advertencias
+nnoremap ]e :action GotoNextError<CR>
+nnoremap ]d :action GotoPreviousError<CR>
+" Ir a interfaces y definiciones
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gI :action GotoTypeDeclaration<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gD :action ShowUsages<CR>
