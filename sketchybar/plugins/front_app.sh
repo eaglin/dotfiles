@@ -11,7 +11,8 @@ if [ "$SENDER" = "front_app_switched" ]; then
   # Obtener el icono usando el mapeo personalizado
   app_icon=$("$CONFIG_DIR/plugins/icon_map_fn.sh" "$INFO")
 
-  sketchybar --set "$NAME" \
-    label="$INFO" \
-    icon.drawing=off
+  sketchybar --animate sin 30 \
+    --set "$NAME" \
+    icon="$app_icon" \
+    label="$INFO"
 fi

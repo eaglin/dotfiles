@@ -1,5 +1,7 @@
 #!/bin/bash
 
+CONFIG_DIR="$HOME/.config/sketchybar"
+source "$CONFIG_DIR/colors-catppuccin.sh" # Importar colores
 sketchybar --add event aerospace_workspace_change
 for sid in $(aerospace list-workspaces --all); do
 
@@ -7,11 +9,18 @@ for sid in $(aerospace list-workspaces --all); do
     --subscribe space."$sid" aerospace_workspace_change display_change system_woke \
     --set space."$sid" \
     icon="$sid" \
-    icon.font="Hack Nerd Font:Bold:13.0" \
-    padding_left=6 \
-    padding_right=6 \
-    icon.padding_left=5 \
-    icon.padding_right=5 \
+    icon.font="FiraCode Nerd Font:Bold:13.0" \
+    background.drawing=on \
+    label.drawing=off \
+    background.color=$MANTLE \
+    background.height=24 \
+    padding_left=3 \
+    padding_right=3 \
+    icon.padding_left=9 \
+    icon.padding_right=9 \
+    icon.highlight_color=$CRUST \
+    icon.highlight=false \
+    icon.color="$TEXT" \
     click_script="aerospace workspace $sid" \
     script="$CONFIG_DIR/plugins/space_icon.sh $sid"
 done

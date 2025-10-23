@@ -5,7 +5,8 @@
 # https://felixkratz.github.io/SketchyBar/config/events#events-and-scripting
 
 sketchybar --set "$NAME" \
-  icon.drawing=off \
+  icon.drawing=on \
+  icon="􀉉" \
   label.padding_left=10 \
-  label="$(date '+%d/%m %H:%M')" \
+  label="$(date '+%a %b %d %H:%M')" \
   refresh=60

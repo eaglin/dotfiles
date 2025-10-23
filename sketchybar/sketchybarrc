@@ -9,7 +9,7 @@ CONFIG_DIR="$HOME/.config/sketchybar"
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 ITEMS_DIR="$CONFIG_DIR/items"
 FONT="JetBrains Mono"
-source "$CONFIG_DIR/colors.sh" # Loads all defined colors
+source "$CONFIG_DIR/colors-catppuccin.sh" # Loads all defined colors
 
 ##### Bar Appearance #####
 # Configuring the general appearance of the bar.
@@ -19,11 +19,10 @@ source "$CONFIG_DIR/colors.sh" # Loads all defined colors
 # https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 bar=(
   position=top
-  height=40
-  color=$TRANSPARENT
-  padding_left=10
-  padding_right=10
-  y_offset=5
+  height=30
+  color=$BASE
+  padding_left=40
+  padding_right=40
   shadow=on
 
 )
@@ -47,15 +46,15 @@ default=(
   label.padding_right=4
   background.height=28
   popup.background.corner_radius=0
-  popup.background.color=$BASE
-  popup.background.border_color=$ROSE
+  popup.background.color=$MANTLE
+  popup.background.border_color=$SURFACE0
   popup.background.border_width=1
 )
 sketchybar --default "${default[@]}"
 
 #####AEROSPACE#####
 source "$CONFIG_DIR/items/aerospaces.sh"
-# source "$CONFIG_DIR/items/front_app.sh"
+source "$CONFIG_DIR/items/front_app.sh"
 # 
 
 ##### Adding Left Items #####
@@ -104,21 +103,25 @@ source "$CONFIG_DIR/items/battery.sh"
 source "$CONFIG_DIR/items/volume.sh"
 source "$CONFIG_DIR/items/bluetooth.sh"
 source "$CONFIG_DIR/items/wifi.sh"
+source "$CONFIG_DIR/items/system-data.sh"
 # source "$CONFIG_DIR/items/network.sh"
 
 sketchybar --add bracket status battery volume wifi  bt \
-           --set         status background.color=$IRIS_TRANSPARENT \
-                                background.border_color=$IRIS \
-                                background.border_width=1 \
-                                background.height=26 \
+           --set         status background.color=$SURFACE0 \
+           padding_right=12 \
+           background.corner_radius=8 \
+           background.border_color=$GREEN \
+           background.border_width=1 \
+                                background.height=24 \
+                                background.drawing=on
 
-sketchybar --add bracket spaces space.1 space.2 space.3 space.4 space.5 \
-  --set spaces \
-  background.drawing=on \
-  background.color=$IRIS_TRANSPARENT \
-  background.height=26 \
-  background.border_width=1 \
-  background.border_color=$IRIS \
+# sketchybar --add bracket spaces space.1 space.2 space.3 space.4 space.5 \
+#   --set spaces \
+#   background.drawing=on \
+#   background.color=$SURFACE0 \
+#   background.height=22 \
+#   background.corner_radius=8 \
+#   background.border_color=$BLUE \
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
 sketchybar --hotload true

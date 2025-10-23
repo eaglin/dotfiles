@@ -1,7 +1,7 @@
-theme = Rose Pine Moon
+theme = catppuccin-mocha.conf
 background-blur-radius = 20
 mouse-hide-while-typing = true
-window-decoration = false
+macos-titlebar-style = hidden
 # keybind = global:cmd+/=toggle_quick_terminal
 macos-option-as-alt = true
 background-blur-radius = 20 
@@ -9,3 +9,5 @@ font-family = Fira Code
 cursor-style=block
 cursor-opacity=0.3
 font-size=16
+window-padding-x=10,0
+window-padding-y=10,0
