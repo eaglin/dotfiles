@@ -10,7 +10,7 @@ cpu=(
   label.color="$LABEL_COLOR"
   icon="$CPU"
   icon.color="$BLUE"
-  update_freq=15
+  update_freq=60
   script="$PLUGIN_DIR/cpu.sh"
 )
 
@@ -18,7 +18,7 @@ memory=(
   label.color="$TEXT"
   icon="$MEMORY"
   icon.color="$GREEN"
-  update_freq=15
+  update_freq=65
   script="$PLUGIN_DIR/ram.sh"
 )
 

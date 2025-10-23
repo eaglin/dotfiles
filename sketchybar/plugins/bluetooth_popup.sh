@@ -35,10 +35,10 @@ populate_popup() {
 
   if [ "$(bt_power)" != "1" ]; then
     sketchybar --add item bt.bluetooth_off popup.bt \
-               --set bt.bluetooth_off label="Bluetooth está apagado" \
-                                     icon="⚠️" \
-                                     icon.color=0xfff5a97f \
-                                     label.color=0xfff5a97f
+      --set bt.bluetooth_off label="Bluetooth está apagado" \
+      icon="⚠️" \
+      icon.color=0xfff5a97f \
+      label.color=0xfff5a97f
     return
   fi
 
@@ -50,10 +50,10 @@ populate_popup() {
 
   if [ -z "$devices" ] || [ "$devices" = "[]" ]; then
     sketchybar --add item bt.no_devices popup.bt \
-               --set bt.no_devices label="No hay dispositivos emparejados" \
-                                   icon="📱" \
-                                   icon.color=0x66ffffff \
-                                   label.color=0x66ffffff
+      --set bt.no_devices label="No hay dispositivos emparejados" \
+      icon="📱" \
+      icon.color=0x66ffffff \
+      label.color=0x66ffffff
     return
   fi
 
@@ -68,11 +68,11 @@ populate_popup() {
       # Determinar icono y color según el estado
       if [ "$connected" = "true" ]; then
         icon="●"
-        color="0xff007AFF"  # Azul de iOS/macOS
+        color="0xff007AFF" # Azul de iOS/macOS
         action="blueutil --disconnect '$address'"
       else
         icon="○"
-        color="0x66ffffff"  # Gris claro
+        color="0x66ffffff" # Gris claro
         action="blueutil --connect '$address'"
       fi
 
@@ -80,25 +80,25 @@ populate_popup() {
       item_name="bt.device.$(echo "$address" | tr ':' '_')"
 
       sketchybar --add item "$item_name" popup.bt \
-                 --set "$item_name" label="$name" \
-                                    icon="$icon" \
-                                    icon.color="$color" \
-                                    label.color="$color" \
-                                    click_script="$action; \$HOME/.config/sketchybar/plugins/bluetooth_popup.sh update_and_close"
+        --set "$item_name" label="$name" \
+        icon="$icon" \
+        icon.color="$color" \
+        label.color="$color" \
+        click_script="$action; \$HOME/.config/sketchybar/plugins/bluetooth_popup.sh update_and_close"
     fi
   done
 
   # Agregar separador y opciones adicionales
   sketchybar --add item bt.separator popup.bt \
-             --set bt.separator icon="—" \
-                               icon.color=0x66ffffff \
-                               label.drawing=off \
-             --add item bt.preferences popup.bt \
-             --set bt.preferences label="Abrir Configuración..." \
-                                 icon="⚙️" \
-                                 icon.color=0x66ffffff \
-                                 label.color=0x66ffffff \
-                                 click_script="open 'x-apple.systempreferences:com.apple.BluetoothSettings'; sketchybar --set bt popup.drawing=off"
+    --set bt.separator icon="—" \
+    icon.color=0x66ffffff \
+    label.drawing=off \
+    --add item bt.preferences popup.bt \
+    --set bt.preferences label="Abrir Configuración..." \
+    icon="⚙️" \
+    icon.color=0x66ffffff \
+    label.color=0x66ffffff \
+    click_script="open 'x-apple.systempreferences:com.apple.BluetoothSettings'; sketchybar --set bt popup.drawing=off"
 }
 
 toggle_popup() {
@@ -144,3 +144,4 @@ case "${1:-$SENDER}" in
   update
   ;;
 esac
+

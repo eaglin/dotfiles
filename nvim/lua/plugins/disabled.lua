@@ -1,5 +1,5 @@
 return {
-  { "CopilotC-Nvim/CopilotChat.nvim", enabled = true },
+  { "CopilotC-Nvim/CopilotChat.nvim", enabled = false },
   {
     "yetone/avante.nvim",
     enabled = false,

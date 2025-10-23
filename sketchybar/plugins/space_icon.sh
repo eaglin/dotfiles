@@ -37,10 +37,10 @@ if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
     background.drawing=on \
     background.color="$LAVENDER" \
     background.border_color="$LAVENDER" \
-    background.border_width=1 \
+    background.border_width=2 \
     icon.higlight=true \
     icon.color="$CRUST" \
-    background.corner_radius=3
+    background.corner_radius=6
 
 else
 
@@ -51,7 +51,7 @@ else
       background.drawing=on \
       background.color="$SURFACE0" \
       background.border_color="$SURFACE0" \
-      background.corner_radius=3 \
+      background.corner_radius=6 \
       icon.color="$OVERLAY1" \
       icon.higlight=true
 
@@ -60,8 +60,8 @@ else
       background.drawing=on \
       background.border_color="$LAVENDER" \
       background.color="$SURFACE0" \
-      background.border_width=1 \
-      background.corner_radius=3 \
+      background.border_width=2 \
+      background.corner_radius=6 \
       icon.highlight_color=$CRUST \
       icon.color="$TEXT" \
       icon.highlight=false

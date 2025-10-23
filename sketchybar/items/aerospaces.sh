@@ -9,15 +9,15 @@ for sid in $(aerospace list-workspaces --all); do
     --subscribe space."$sid" aerospace_workspace_change display_change system_woke \
     --set space."$sid" \
     icon="$sid" \
-    icon.font="FiraCode Nerd Font:Bold:13.0" \
+    icon.font="FiraCode Nerd Font:Bold:12.0" \
     background.drawing=on \
     label.drawing=off \
     background.color=$MANTLE \
-    background.height=24 \
+    background.height=22, \
     padding_left=3 \
     padding_right=3 \
-    icon.padding_left=9 \
-    icon.padding_right=9 \
+    icon.padding_left=8 \
+    icon.padding_right=8 \
     icon.highlight_color=$CRUST \
     icon.highlight=false \
     icon.color="$TEXT" \
