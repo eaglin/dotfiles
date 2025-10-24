@@ -24,6 +24,23 @@ local mode = {
   end,
 }
 
+local function codecompanion_adapter_name()
+  local chat = require("codecompanion").buf_get_chat(vim.api.nvim_get_current_buf())
+  if not chat then
+    return nil
+  end
+
+  return " " .. chat.adapter.formatted_name
+end
+
+local function codecompanion_current_model_name()
+  local chat = require("codecompanion").buf_get_chat(vim.api.nvim_get_current_buf())
+  if not chat then
+    return nil
+  end
+
+  return chat.settings.model
+end
 -- This file contains the configuration for various UI-related plugins in Neovim.
 return {
   -- Plugin: folke/todo-comments.nvim
@@ -67,12 +84,14 @@ return {
     requires = { "nvim-tree/nvim-web-devicons", opt = true }, -- Optional dependency for icons
     opts = {
       options = {
+        theme = "gentleman-kanagawa-blur", -- Set the theme for lualine
         icons_enabled = true, -- Enable icons in the statusline
       },
       sections = {
         lualine_a = {
           {
             "mode", -- Display the current mode
+            icon = "󱗞", -- Set the icon for the mode
           },
         },
       },
@@ -92,7 +111,7 @@ return {
                 end
 
                 ---@diagnostic disable-next-line: param-type-mismatch
-                local path = vim.fn.fnamemodify(oil.get_current_dir(), ":")
+                local path = vim.fn.fnamemodify(oil.get_current_dir(), ":~")
                 return path .. " %m"
               end,
             },
@@ -149,7 +168,7 @@ return {
           cursorline = true, -- Hide the incline window when the cursorline is active
         },
         render = function(props)
-          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ": =>") -- Get the filename
+          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t") -- Get the filename
           if vim.bo[props.buf].modified then
             filename = "[+] " .. filename -- Indicate if the file is modified
           end
@@ -198,15 +217,15 @@ return {
           filename_bonus = true,
         },
         sources = {
-          -- explorer = {
-          --   matcher = {
-          --     fuzzy = true, -- Enables fuzzy matching, so you can be a bit imprecise with your search terms
-          --     smartcase = true, -- If your search term has uppercase letters, the search becomes case-sensitive
-          --     ignorecase = true, -- Ignores case when searching, unless smartcase is triggered
-          --     filename_bonus = true, -- Gives a higher priority to matches in filenames
-          --     sort_empty = false, -- If no matches are found, it won't sort the results
-          --   },
-          -- },
+          explorer = {
+            matcher = {
+              fuzzy = true, -- Enables fuzzy matching, so you can be a bit imprecise with your search terms
+              smartcase = true, -- If your search term has uppercase letters, the search becomes case-sensitive
+              ignorecase = true, -- Ignores case when searching, unless smartcase is triggered
+              filename_bonus = true, -- Gives a higher priority to matches in filenames
+              sort_empty = false, -- If no matches are found, it won't sort the results
+            },
+          },
         },
       },
       dashboard = {
