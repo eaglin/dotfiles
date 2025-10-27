@@ -12,7 +12,7 @@ sketchybar --add item chevron left \
   background.color=$SURFACE0 \
   background.corner_radius=1 \
   background.height=24 \
-  background.border_width=2 \
+  background.border_width=1 \
   background.border_color=$BLUE \
   background.corner_radius=6 \
   icon.drawing=on \

@@ -1,5 +1,5 @@
-
 #!/bin/bash
+
 # This is a demo config to showcase some of the most important commands.
 # It is meant to be changed and configured, as it is intentionally kept sparse.
 # For a (much) more advanced configuration example see my dotfiles:
@@ -19,12 +19,19 @@ source "$CONFIG_DIR/colors-catppuccin.sh" # Loads all defined colors
 # https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 bar=(
   position=top
-  height=30
+  height=32
   color=$BASE
   padding_left=20
   padding_right=20
   shadow=on
-
+  margin=10
+  y_offset=5
+  border_width=1
+  border_color=$OVERLAY2
+  corner_radius=8
+  blur_radius=10
+top_most=true
+notch_width=300
 )
 
 sketchybar --bar "${bar[@]}" 
@@ -116,7 +123,7 @@ sketchybar --add bracket status battery volume wifi  bt \
            --set         status background.color=$SURFACE0 \
            background.corner_radius=8 \
            background.border_color=$GREEN \
-           background.border_width=2 \
+           background.border_width=1 \
                                 background.height=24 \
                                 background.drawing=on
 
@@ -143,9 +150,10 @@ sketchybar --add bracket system memory disk cpu  \
            background.color=$SURFACE0 \
            background.corner_radius=8 \
            background.border_color=$SKY\
-           background.border_width=2 \
+           background.border_width=1 \
            background.height=24 \
 
 
 sketchybar --update
 sketchybar --hotload true
+

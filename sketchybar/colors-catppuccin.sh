@@ -40,6 +40,7 @@ export LAVENDER=0xffb4befe
 
 # Transparent variants
 export TRANSPARENT=0x00000000
+export OVERLAY2_TRANSPARENT=0x4f9399b2
 export MAUVE_TRANSPARENT=0x4fcba6f7
 export BLUE_TRANSPARENT=0x4f89b4fa
 export GREEN_TRANSPARENT=0x4fa6e3a1
