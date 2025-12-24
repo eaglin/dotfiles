@@ -8,19 +8,15 @@ for sid in $(aerospace list-workspaces --all); do
   sketchybar --add item space."$sid" left \
     --subscribe space."$sid" aerospace_workspace_change display_change system_woke \
     --set space."$sid" \
-    icon="$sid" \
-    icon.font="FiraCode Nerd Font:Bold:12.0" \
+    label="$sid" \
     background.drawing=on \
-    label.drawing=off \
-    background.color=$MANTLE \
-    background.height=22, \
-    padding_left=3 \
-    padding_right=3 \
-    icon.padding_left=8 \
-    icon.padding_right=8 \
-    icon.highlight_color=$CRUST \
-    icon.highlight=false \
-    icon.color="$TEXT" \
+    label.font="Hack Nerd Font:Bold:13.0" \
+    icon.drawing=off \
+    background.height=18 \
+    label.padding_right=6 \
+    label.padding_left=6 \
+    padding_left=6 \
+    padding_right=6 \
     click_script="aerospace workspace $sid" \
     script="$CONFIG_DIR/plugins/space_icon.sh $sid"
 done

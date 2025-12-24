@@ -47,7 +47,7 @@ return {
         dim_inactive = {
           enabled = false,
           shade = "dark",
-          percentage = 1.15,
+          percentage = 0.15,
         },
         styles = {
           comments = { "italic" },
@@ -74,6 +74,12 @@ return {
             indentscope_color = "",
           },
         },
+        custom_highlights = function(colors)
+          return {
+            Cursor = { fg = colors.green },
+            CursorLine = { bg = colors.surface0 },
+          }
+        end,
       })
 
       -- Activar el tema

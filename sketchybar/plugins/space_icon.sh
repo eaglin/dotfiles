@@ -36,11 +36,8 @@ if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
   sketchybar --set "$NAME" \
     background.drawing=on \
     background.color="$LAVENDER" \
-    background.border_color="$LAVENDER" \
-    background.border_width=2 \
-    icon.higlight=true \
-    icon.color="$CRUST" \
-    background.corner_radius=6
+    label.color="$BASE" \
+    background.corner_radius=16
 
 else
 
@@ -50,20 +47,20 @@ else
     sketchybar --set "$NAME" \
       background.drawing=on \
       background.color="$SURFACE0" \
-      background.border_color="$SURFACE0" \
-      background.corner_radius=6 \
-      icon.color="$OVERLAY1" \
-      icon.higlight=true
+      background.corner_radius=16 \
+      label.color="$OVERLAY1" \
+      background.border_width=0 \
+      background.border_color="$SURFACE0"
 
   else
     sketchybar --set "$NAME" \
       background.drawing=on \
-      background.border_color="$LAVENDER" \
+      background.border_color="$OVERLAY0" \
       background.color="$SURFACE0" \
-      background.border_width=2 \
-      background.corner_radius=6 \
-      icon.highlight_color=$CRUST \
-      icon.color="$TEXT" \
+      background.border_width=0 \
+      background.corner_radius=12 \
+      label.highlight_color=$MAUVE \
+      label.color="$LAVENDER" \
       icon.highlight=false
   fi
 fi

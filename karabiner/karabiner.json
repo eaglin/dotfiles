@@ -18,8 +18,8 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_if_alone_timeout_milliseconds": 170,
-                                    "basic.to_if_held_down_threshold_milliseconds": 140
+                                    "basic.to_if_alone_timeout_milliseconds": 200,
+                                    "basic.to_if_held_down_threshold_milliseconds": 100
                                 },
                                 "to_if_alone": [{ "key_code": "a" }],
                                 "to_if_held_down": [{ "key_code": "left_control" }],
@@ -37,8 +37,8 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_if_alone_timeout_milliseconds": 170,
-                                    "basic.to_if_held_down_threshold_milliseconds": 140
+                                    "basic.to_if_alone_timeout_milliseconds": 200,
+                                    "basic.to_if_held_down_threshold_milliseconds": 100
                                 },
                                 "to_if_alone": [{ "key_code": "s" }],
                                 "to_if_held_down": [{ "key_code": "left_option" }],
@@ -56,8 +56,8 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_if_alone_timeout_milliseconds": 170,
-                                    "basic.to_if_held_down_threshold_milliseconds": 140
+                                    "basic.to_if_alone_timeout_milliseconds": 200,
+                                    "basic.to_if_held_down_threshold_milliseconds": 100
                                 },
                                 "to_if_alone": [{ "key_code": "d" }],
                                 "to_if_held_down": [{ "key_code": "left_command" }],
@@ -75,8 +75,8 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_if_alone_timeout_milliseconds": 170,
-                                    "basic.to_if_held_down_threshold_milliseconds": 140
+                                    "basic.to_if_alone_timeout_milliseconds": 200,
+                                    "basic.to_if_held_down_threshold_milliseconds": 90
                                 },
                                 "to_if_alone": [{ "key_code": "f" }],
                                 "to_if_held_down": [{ "key_code": "left_shift" }],
@@ -94,8 +94,8 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_if_alone_timeout_milliseconds": 170,
-                                    "basic.to_if_held_down_threshold_milliseconds": 140
+                                    "basic.to_if_alone_timeout_milliseconds": 200,
+                                    "basic.to_if_held_down_threshold_milliseconds": 90
                                 },
                                 "to_if_alone": [{ "key_code": "j" }],
                                 "to_if_held_down": [{ "key_code": "right_shift" }],
@@ -113,8 +113,8 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_if_alone_timeout_milliseconds": 170,
-                                    "basic.to_if_held_down_threshold_milliseconds": 140
+                                    "basic.to_if_alone_timeout_milliseconds": 200,
+                                    "basic.to_if_held_down_threshold_milliseconds": 100
                                 },
                                 "to_if_alone": [{ "key_code": "k" }],
                                 "to_if_held_down": [{ "key_code": "right_command" }],
@@ -132,8 +132,8 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_if_alone_timeout_milliseconds": 170,
-                                    "basic.to_if_held_down_threshold_milliseconds": 140
+                                    "basic.to_if_alone_timeout_milliseconds": 200,
+                                    "basic.to_if_held_down_threshold_milliseconds": 100
                                 },
                                 "to_if_alone": [{ "key_code": "l" }],
                                 "to_if_held_down": [{ "key_code": "right_option" }],
@@ -151,8 +151,8 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_if_alone_timeout_milliseconds": 170,
-                                    "basic.to_if_held_down_threshold_milliseconds": 140
+                                    "basic.to_if_alone_timeout_milliseconds": 200,
+                                    "basic.to_if_held_down_threshold_milliseconds": 100
                                 },
                                 "to_if_alone": [{ "key_code": "semicolon" }],
                                 "to_if_held_down": [{ "key_code": "right_control" }],
@@ -187,6 +187,21 @@
                     }
                 ]
             },
+            "devices": [
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 185,
+                        "vendor_id": 5426
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "pointing_button": "button4" },
+                            "to": [{ "pointing_button": "button4" }]
+                        }
+                    ]
+                }
+            ],
             "name": "Default profile",
             "selected": true,
             "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }

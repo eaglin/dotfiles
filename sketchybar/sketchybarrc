@@ -20,30 +20,21 @@ source "$CONFIG_DIR/colors-catppuccin.sh" # Loads all defined colors
 bar=(
   position=top
   height=32
-  color=$BASE
-  padding_left=20
+  color=$BASE_TRANSPARENT
+  padding_left=10
   padding_right=20
-  shadow=on
-  margin=10
-  y_offset=5
-  border_width=1
-  border_color=$OVERLAY2
-  corner_radius=8
-  blur_radius=10
-top_most=true
-notch_width=300
+
 )
 
-sketchybar --bar "${bar[@]}" 
+sketchybar --bar "${bar[@]}"
 ##### Changing Defaults #####
 # We now change some default values, which are applied to all further items.
 # For a full list of all available item properties see:
 # https://felixkratz.github.io/SketchyBar/config/items
 
 default=(
-  padding_left=5
   padding_right=5
-  icon.font="Hack Nerd Font:Bold:14.0"
+  icon.font="Hack Nerd Font:Bold:13.0"
   label.font="Hack Nerd Font:Bold:14.0"
   icon.color=$TEXT
   label.color=$TEXT
@@ -60,9 +51,39 @@ default=(
 sketchybar --default "${default[@]}"
 
 #####AEROSPACE#####
+
+sketchybar -m --add item spacer_power_left left \
+  --set spacer_power_left \
+  icon.padding_left=0 \
+  icon.padding_right=0 \
+  label=""
+
+source "$CONFIG_DIR/items/power_menu.sh"
+
+sketchybar -m --add item spacer_power left \
+  --set spacer_power \
+  label.padding_left=0 \
+  label.padding_right=0 \
+  icon.padding_left=0 \
+  icon.padding_right=0 \
+  label=""
+
+sketchybar -m --add item space_left_spaces left \
+  --set space_left_spaces \
+  background.drawing=on \
+  label.padding_right=0 \
+  label="" \
+  label.padding_left=0
+
 source "$CONFIG_DIR/items/aerospaces.sh"
+
+sketchybar --add item space_right_spaces left \
+  --set space_right_spaces \
+  label.padding_right=0 \
+  icon.drawing=off
+
 source "$CONFIG_DIR/items/front_app.sh"
-# 
+#
 
 ##### Adding Left Items #####
 # We add some regular items to the left side of the bar, where
@@ -106,12 +127,7 @@ source "$CONFIG_DIR/items/front_app.sh"
 # # Bracket
 #
 
-
 source "$CONFIG_DIR/items/clock.sh"
-
-sketchybar -m --add item spacer1 right \
---set spacer1 \
-label="" 
 
 source "$CONFIG_DIR/items/battery.sh"
 source "$CONFIG_DIR/items/volume.sh"
@@ -119,41 +135,37 @@ source "$CONFIG_DIR/items/bluetooth.sh"
 source "$CONFIG_DIR/items/wifi.sh"
 # source "$CONFIG_DIR/items/network.sh"
 
-sketchybar --add bracket status battery volume wifi  bt \
-           --set         status background.color=$SURFACE0 \
-           background.corner_radius=8 \
-           background.border_color=$GREEN \
-           background.border_width=1 \
-                                background.height=24 \
-                                background.drawing=on
-
-sketchybar  -m --add item spacer right \
---set spacer \
-label="" 
-
-
-
+sketchybar -m --add item spacer right \
+  --set spacer \
+  margin=0 \
+  label.padding_right=10 \
+  label.padding_left=10 \
+  icon.drawing=off \
+  label=""
+sketchybar --add bracket status battery volume wifi bt \
+  --set status \
+  background.corner_radius=4 \
+  background.height=20
 
 source "$CONFIG_DIR/items/system-data.sh"
-# sketchybar --add bracket spaces space.1 space.2 space.3 space.4 space.5 \
-#   --set spaces \
-#   background.drawing=on \
-#   background.color=$SURFACE0 \
-#   background.height=22 \
-#   background.corner_radius=8 \
-#   background.border_color=$BLUE \
+
+sketchybar --add bracket spaces space_left_spaces space.1 space.2 space.3 space.4 space.5 space_right_spaces \
+  --set spaces \
+  background.color=$SURFACE0 \
+  background.height=24 \
+  background.border_color=$CRUST \
+  background.border_width=1 \
+  background.corner_radius=6
 ##### Force all scripts to run the first time (never do this in a script) #####
 
-sketchybar --add bracket system memory disk cpu  \
-           --set system \
-                      background.drawing=on \
-           background.color=$SURFACE0 \
-           background.corner_radius=8 \
-           background.border_color=$SKY\
-           background.border_width=1 \
-           background.height=24 \
-
+sketchybar --add bracket system memory disk cpu \
+  --set system \
+  background.drawing=on \
+  background.color=$SURFACE0 \
+  background.corner_radius=6 \
+  background.border_color=$CRUST \
+  background.border_width=1 \
+  background.height=24
 
 sketchybar --update
 sketchybar --hotload true
-

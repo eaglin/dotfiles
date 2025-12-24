@@ -12,16 +12,16 @@ return {
       },
     },
   },
-  {
-    "mason-org/mason-lspconfig.nvim",
-    opts = {
-      automatic_enable = {
-        exclude = {
-          --needs external plugin
-          "jdtls",
-        },
-      },
-    },
-  },
-  { "mfussenegger/nvim-jdtls" },
+  -- {
+  --   "mason-org/mason-lspconfig.nvim",
+  --   opts = {
+  --     automatic_enable = {
+  --       exclude = {
+  --         --needs external plugin
+  --         "jdtls",
+  --       },
+  --     },
+  --   },
+  -- },
+  -- { "mfussenegger/nvim-jdtls" },
 }

@@ -8,5 +8,5 @@ sketchybar --set "$NAME" \
   icon.drawing=on \
   icon="􀉉" \
   label.padding_left=10 \
-  label="$(date '+%a %b %d %H:%M')" \
+  label="$(date '+%a %b %d - %H:%M')" \
   refresh=60
