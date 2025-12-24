@@ -8,8 +8,26 @@ return {
     "mfussenegger/nvim-dap",
     recommended = true, -- Recommended plugin
     desc = "Debugging support. Requires language specific adapters to be configured. (see lang extras)",
-
+    optional = true,
+    opts = function()
+      -- Simple configuration to attach to remote java debug process
+      -- Taken directly from https://github.com/mfussenegger/nvim-dap/wiki/Java
+      local dap = require("dap")
+      dap.configurations.java = {
+        {
+          type = "java",
+          request = "attach",
+          name = "Debug (Attach) - Remote",
+          hostName = "127.0.0.1",
+          port = 5005,
+        },
+      }
+    end,
     dependencies = {
+      {
+        "mason-org/mason.nvim",
+        opts = { ensure_installed = { "java-debug-adapter", "java-test" } },
+      },
       -- Plugin: nvim-dap-ui
       -- URL: https://github.com/rcarriga/nvim-dap-ui
       -- Description: A UI for nvim-dap.
@@ -98,14 +116,14 @@ return {
         desc = "Run Last",
       },
       {
-        "<leader>dO",
+        "<leader>do",
         function()
           require("dap").step_out()
         end,
         desc = "Step Out",
       },
       {
-        "<leader>do",
+        "<leader>dO",
         function()
           require("dap").step_over()
         end,
@@ -121,9 +139,9 @@ return {
       {
         "<leader>dr",
         function()
-          require("dap").restart()
+          require("dap").repl.toggle()
         end,
-        desc = "restart session",
+        desc = "Toggle REPL",
       },
       {
         "<leader>ds",
