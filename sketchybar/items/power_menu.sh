@@ -20,5 +20,5 @@ power_menu=(
   click_script="$PLUGIN_DIR/power_menu.sh mouse.clicked"
 )
 
-sketchybar --add item power_menu left \
+sketchybar --add item power_menu right \
   --set power_menu "${power_menu[@]}"

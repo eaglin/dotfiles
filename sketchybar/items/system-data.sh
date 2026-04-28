@@ -9,7 +9,7 @@ export MEMORY=􀫦
 cpu=(
   label.color="$TEXT"
   icon="$CPU"
-  icon.color="$BLUE"
+  icon.color="$ROSE"
   update_freq=60
   script="$PLUGIN_DIR/cpu.sh"
 )
@@ -17,7 +17,7 @@ cpu=(
 memory=(
   label.color="$TEXT"
   icon="$MEMORY"
-  icon.color="$GREEN"
+  icon.color="$IRIS"
   update_freq=65
   script="$PLUGIN_DIR/ram.sh"
 )
@@ -25,9 +25,10 @@ memory=(
 disk=(
   label.color="$TEXT"
   icon="$DISK"
-  icon.color="$MAROON"
+  icon.color="$FOAM"
   update_freq=60
   script="$PLUGIN_DIR/disk.sh"
+  label.padding_right=18
 )
 
 sketchybar --add item disk right \

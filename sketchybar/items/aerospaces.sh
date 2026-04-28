@@ -1,7 +1,9 @@
 #!/bin/bash
 
 CONFIG_DIR="$HOME/.config/sketchybar"
-source "$CONFIG_DIR/colors-catppuccin.sh" # Importar colores
+# source "$CONFIG_DIR/colors-catppuccin.sh" # Importar colores
+#
+source "$CONFIG_DIR/colors.sh" # Loads all defined colors
 sketchybar --add event aerospace_workspace_change
 for sid in $(aerospace list-workspaces --all); do
 
@@ -10,7 +12,7 @@ for sid in $(aerospace list-workspaces --all); do
     --set space."$sid" \
     label="$sid" \
     background.drawing=on \
-    label.font="Hack Nerd Font:Bold:13.0" \
+    label.font="JetBrainsMono Nerd Font:Bold:14.0" \
     icon.drawing=off \
     background.height=18 \
     label.padding_right=6 \

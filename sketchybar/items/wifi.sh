@@ -3,10 +3,15 @@
 POPUP_OFF="sketchybar --set wifi popup.drawing=off"
 
 wifi=(
-  icon.padding_right=0
+  icon.font="JetBrainsMono Nerd Font:Bold:16.0"
+  icon.color=$TEXT
+  icon.padding_left=8
   label.drawing=off
+  label.font="JetBrainsMono Nerd Font:Bold:13.0"
+  label.color=$TEXT
+  background.drawing=off
   popup.align=right
-  update_freq=50
+  update_freq=60
   script="$PLUGIN_DIR/wifi.sh"
   --subscribe wifi wifi_change
   mouse.clicked

@@ -3,7 +3,7 @@
 
 source "$HOME/.config/sketchybar/colors.sh"
 
-ICON="󰂯" # Nerd Font Bluetooth
+ICON="󰂱" # Nerd Font Bluetooth
 COLOR_ON="$IRIS"
 COLOR_OFF="0x66ffffff"
 

@@ -4,12 +4,12 @@
 # It is meant to be changed and configured, as it is intentionally kept sparse.
 # For a (much) more advanced configuration example see my dotfiles:
 # https://github.com/FelixKratz/dotfiles
-source "$HOME/.config/sketchybar/icons.sh" # Loads all defined colors
+source "$HOME/.config/sketchybar/icons.sh" # Loads all defined icons
 CONFIG_DIR="$HOME/.config/sketchybar"
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 ITEMS_DIR="$CONFIG_DIR/items"
 FONT="JetBrains Mono"
-source "$CONFIG_DIR/colors-catppuccin.sh" # Loads all defined colors
+source "$CONFIG_DIR/colors.sh" # Loads Rosé Pine colors
 
 ##### Bar Appearance #####
 # Configuring the general appearance of the bar.
@@ -20,7 +20,7 @@ source "$CONFIG_DIR/colors-catppuccin.sh" # Loads all defined colors
 bar=(
   position=top
   height=32
-  color=$BASE_TRANSPARENT
+  color=$BASE
   padding_left=10
   padding_right=20
 
@@ -34,8 +34,8 @@ sketchybar --bar "${bar[@]}"
 
 default=(
   padding_right=5
-  icon.font="Hack Nerd Font:Bold:13.0"
-  label.font="Hack Nerd Font:Bold:14.0"
+  icon.font="JetBrainsMono Nerd Font:Bold:14.0"
+  label.font="JetBrainsMono Nerd Font:Bold:13.0"
   icon.color=$TEXT
   label.color=$TEXT
   icon.padding_left=4
@@ -43,47 +43,29 @@ default=(
   label.padding_left=4
   label.padding_right=4
   background.height=28
+  background.corner_radius=6
   popup.background.corner_radius=6
-  popup.background.color=$SURFACE0
-  popup.background.border_color=$SURFACE2
+  popup.background.color=$SURFACE
+  popup.background.border_color=$OVERLAY
   popup.background.border_width=2
 )
 sketchybar --default "${default[@]}"
 
 #####AEROSPACE#####
+# Minimal design: Only workspace indicators on the left
 
-sketchybar -m --add item spacer_power_left left \
-  --set spacer_power_left \
-  icon.padding_left=0 \
-  icon.padding_right=0 \
-  label=""
-
-source "$CONFIG_DIR/items/power_menu.sh"
-
-sketchybar -m --add item spacer_power left \
-  --set spacer_power \
-  label.padding_left=0 \
-  label.padding_right=0 \
-  icon.padding_left=0 \
-  icon.padding_right=0 \
-  label=""
-
-sketchybar -m --add item space_left_spaces left \
-  --set space_left_spaces \
-  background.drawing=on \
-  label.padding_right=0 \
-  label="" \
-  label.padding_left=0
+# Removed for minimal design:
+# source "$CONFIG_DIR/items/power_menu.sh"
 
 source "$CONFIG_DIR/items/aerospaces.sh"
 
-sketchybar --add item space_right_spaces left \
-  --set space_right_spaces \
-  label.padding_right=0 \
-  icon.drawing=off
-
-source "$CONFIG_DIR/items/front_app.sh"
+# Removed for minimal design (spacer and front app):
+# sketchybar --add item space_right_spaces left \
+#   --set space_right_spaces \
+#   label.padding_right=0 \
+#   icon.drawing=off
 #
+# source "$CONFIG_DIR/items/front_app.sh"
 
 ##### Adding Left Items #####
 # We add some regular items to the left side of the bar, where
@@ -127,45 +109,29 @@ source "$CONFIG_DIR/items/front_app.sh"
 # # Bracket
 #
 
-source "$CONFIG_DIR/items/clock.sh"
+##### Adding Right Items #####
+# Minimal design: WiFi, Bluetooth, Volume, Battery, Clock (with labels)
 
+# Order matters: Items stack right-to-left, so source in reverse order
+# Clock first = rightmost position
+source "$CONFIG_DIR/items/clock.sh"
 source "$CONFIG_DIR/items/battery.sh"
 source "$CONFIG_DIR/items/volume.sh"
 source "$CONFIG_DIR/items/bluetooth.sh"
 source "$CONFIG_DIR/items/wifi.sh"
-# source "$CONFIG_DIR/items/network.sh"
 
-sketchybar -m --add item spacer right \
-  --set spacer \
-  margin=0 \
-  label.padding_right=10 \
-  label.padding_left=10 \
-  icon.drawing=off \
-  label=""
-sketchybar --add bracket status battery volume wifi bt \
+# Bracket for status icons (WiFi, Bluetooth, Volume, Battery)
+sketchybar --add bracket status wifi bt volume battery \
   --set status \
-  background.corner_radius=4 \
-  background.height=20
+  background.drawing=on \
+  background.color=$OVERLAY \
+  background.corner_radius=6 \
+  background.height=24
+
+# - System data (CPU, Memory, Disk)
+# - System bracket
 
 source "$CONFIG_DIR/items/system-data.sh"
-
-sketchybar --add bracket spaces space_left_spaces space.1 space.2 space.3 space.4 space.5 space_right_spaces \
-  --set spaces \
-  background.color=$SURFACE0 \
-  background.height=24 \
-  background.border_color=$CRUST \
-  background.border_width=1 \
-  background.corner_radius=6
-##### Force all scripts to run the first time (never do this in a script) #####
-
-sketchybar --add bracket system memory disk cpu \
-  --set system \
-  background.drawing=on \
-  background.color=$SURFACE0 \
-  background.corner_radius=6 \
-  background.border_color=$CRUST \
-  background.border_width=1 \
-  background.height=24
 
 sketchybar --update
 sketchybar --hotload true

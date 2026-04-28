@@ -4,9 +4,6 @@
 # the item invoking this script:
 # https://felixkratz.github.io/SketchyBar/config/events#events-and-scripting
 
+# Format: "Mon 12 Jan 19:15"
 sketchybar --set "$NAME" \
-  icon.drawing=on \
-  icon="􀉉" \
-  label.padding_left=10 \
-  label="$(date '+%a %b %d - %H:%M')" \
-  refresh=60
+  label="$(date '+%a %d %b %H:%M')"

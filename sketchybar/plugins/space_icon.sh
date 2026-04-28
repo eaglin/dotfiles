@@ -1,5 +1,5 @@
 CONFIG_DIR="$HOME/.config/sketchybar"
-source "$CONFIG_DIR/colors-catppuccin.sh" # Importar colores
+source "$CONFIG_DIR/colors.sh" # Import Rosé Pine colors
 FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused --format "%{workspace}")
 
 # if [ "$SENDER" == "mouse.entered" ]; then
@@ -35,7 +35,7 @@ if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
 
   sketchybar --set "$NAME" \
     background.drawing=on \
-    background.color="$LAVENDER" \
+    background.color="$IRIS" \
     label.color="$BASE" \
     background.corner_radius=16
 
@@ -46,21 +46,21 @@ else
     # No hay aplicaciones en este espacio
     sketchybar --set "$NAME" \
       background.drawing=on \
-      background.color="$SURFACE0" \
+      background.color="$HIGHLIGHT_MED" \
       background.corner_radius=16 \
-      label.color="$OVERLAY1" \
+      label.color="$OVERLAY0" \
       background.border_width=0 \
-      background.border_color="$SURFACE0"
+      background.border_color="$SURFACE"
 
   else
     sketchybar --set "$NAME" \
       background.drawing=on \
       background.border_color="$OVERLAY0" \
-      background.color="$SURFACE0" \
+      background.color="$HIGHLIGHT_MED" \
       background.border_width=0 \
       background.corner_radius=12 \
-      label.highlight_color=$MAUVE \
-      label.color="$LAVENDER" \
+      label.highlight_color=$IRIS \
+      label.color="$IRIS" \
       icon.highlight=false
   fi
 fi
@@ -83,7 +83,7 @@ fi
 #       label="" \
 #       label.padding_right=5 \
 #       icon.padding_left=10 \
-#       background.color="$HIGHLIGHT_HIGH" \
+#       background.color="$HIGHLIGHT_MED" \
 #
 #   else
 #     sketchybar --set "$NAME" \
