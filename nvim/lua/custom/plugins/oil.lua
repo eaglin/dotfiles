@@ -2,14 +2,14 @@
 -- URL: https://github.com/stevearc/oil.nvim
 
 return {
-  "stevearc/oil.nvim",
+  'stevearc/oil.nvim',
 
   -- Load Oil when opening a directory or when using the keymap
   lazy = false,
 
   keys = {
-    { "-", "<CMD>Oil<CR>", desc = "Open Oil (parent dir)" },
-    { "<leader>E", "<CMD>Oil --float<CR>", desc = "Open Oil (floating)" },
+    { '-', '<CMD>Oil<CR>', desc = 'Open Oil (parent dir)' },
+    { '<leader>E', '<CMD>Oil --float<CR>', desc = 'Open Oil (floating)' },
   },
 
   opts = {
@@ -27,24 +27,24 @@ return {
 
     -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
     keymaps = {
-      ["g?"] = "actions.show_help",
-      ["<CR>"] = "actions.select",
-      ["<C-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open in vertical split" },
-      ["<C-v>"] = { "actions.select", opts = { horizontal = true }, desc = "Open in horizontal split" },
-      ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open in new tab" },
-      ["<C-p>"] = "actions.preview",
-      ["<C-c>"] = "actions.close",
-      ["<C-r>"] = "actions.refresh",
-      ["-"] = "actions.parent",
-      ["_"] = "actions.open_cwd",
-      ["`"] = "actions.cd",
-      ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" },
-      ["gs"] = "actions.change_sort",
-      ["gx"] = "actions.open_external",
-      ["g."] = "actions.toggle_hidden",
-      ["g\\"] = "actions.toggle_trash",
+      ['g?'] = 'actions.show_help',
+      ['<CR>'] = 'actions.select',
+      ['<C-s>'] = { 'actions.select', opts = { vertical = true }, desc = 'Open in vertical split' },
+      ['<C-v>'] = { 'actions.select', opts = { horizontal = true }, desc = 'Open in horizontal split' },
+      ['<C-t>'] = { 'actions.select', opts = { tab = true }, desc = 'Open in new tab' },
+      ['<C-p>'] = 'actions.preview',
+      ['<C-c>'] = 'actions.close',
+      ['<C-r>'] = 'actions.refresh',
+      ['-'] = 'actions.parent',
+      ['_'] = 'actions.open_cwd',
+      ['`'] = 'actions.cd',
+      ['~'] = { 'actions.cd', opts = { scope = 'tab' }, desc = ':tcd to the current oil directory' },
+      ['gs'] = 'actions.change_sort',
+      ['gx'] = 'actions.open_external',
+      ['g.'] = 'actions.toggle_hidden',
+      ['g\\'] = 'actions.toggle_trash',
       -- Quick quit
-      ["q"] = "actions.close",
+      ['q'] = 'actions.close',
     },
 
     -- Set to false to disable all of the above keymaps
@@ -54,21 +54,17 @@ return {
       -- Show files and directories that start with "." by default
       show_hidden = true,
       -- This function defines what is considered a "hidden" file
-      is_hidden_file = function(name, bufnr)
-        return vim.startswith(name, ".")
-      end,
+      is_hidden_file = function(name, bufnr) return vim.startswith(name, '.') end,
       -- This function defines what will never be shown, even when `show_hidden` is set
-      is_always_hidden = function(name, bufnr)
-        return name == ".." or name == ".git"
-      end,
+      is_always_hidden = function(name, bufnr) return name == '..' or name == '.git' end,
       -- Natural sort order for files and directories
       natural_order = true,
       case_insensitive = false,
       sort = {
         -- sort order can be "asc" or "desc"
         -- see :help oil-columns to see which columns are sortable
-        { "type", "asc" },
-        { "name", "asc" },
+        { 'type', 'asc' },
+        { 'name', 'asc' },
       },
     },
 
@@ -78,17 +74,15 @@ return {
       padding = 2,
       max_width = 100,
       max_height = 30,
-      border = "rounded",
+      border = 'rounded',
       win_options = {
         winblend = 0,
       },
       -- preview_split: Split direction: "auto", "left", "right", "above", "below".
-      preview_split = "auto",
+      preview_split = 'auto',
       -- This is the config that will be passed to nvim_open_win.
       -- Change values here to customize the layout
-      override = function(conf)
-        return conf
-      end,
+      override = function(conf) return conf end,
     },
 
     -- Configuration for the actions floating preview window
@@ -105,7 +99,7 @@ return {
       min_height = { 5, 0.1 },
       -- optionally define an integer/float for the exact height of the preview window
       height = nil,
-      border = "rounded",
+      border = 'rounded',
       win_options = {
         winblend = 0,
       },
@@ -121,8 +115,8 @@ return {
       max_height = { 10, 0.9 },
       min_height = { 5, 0.1 },
       height = nil,
-      border = "rounded",
-      minimized_border = "none",
+      border = 'rounded',
+      minimized_border = 'none',
       win_options = {
         winblend = 0,
       },
@@ -130,45 +124,43 @@ return {
 
     -- Configuration for the floating SSH window
     ssh = {
-      border = "rounded",
+      border = 'rounded',
     },
   },
 
   dependencies = {
-    "nvim-tree/nvim-web-devicons",
+    'nvim-tree/nvim-web-devicons',
   },
 
   config = function(_, opts)
-    require("oil").setup(opts)
+    require('oil').setup(opts)
 
     -- Custom autocmds for Oil
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "oil",
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'oil',
       callback = function()
         -- Set local options for oil buffers
-        vim.opt_local.colorcolumn = ""
-        vim.opt_local.signcolumn = "no"
+        vim.opt_local.colorcolumn = ''
+        vim.opt_local.signcolumn = 'no'
 
         -- Auto-save when leaving oil buffer with changes
-        vim.api.nvim_create_autocmd("BufLeave", {
+        vim.api.nvim_create_autocmd('BufLeave', {
           buffer = 0,
           callback = function()
-            if vim.bo.modified then
-              vim.cmd("silent! write")
-            end
+            if vim.bo.modified then vim.cmd 'silent! write' end
           end,
         })
       end,
     })
 
     -- Global keymap to open Oil in current buffer's directory
-    vim.keymap.set("n", "<leader>-", function()
-      local oil = require("oil")
+    vim.keymap.set('n', '<leader>-', function()
+      local oil = require 'nvim.lua.custom.plugins.oil'
       local current_buf = vim.api.nvim_get_current_buf()
       local current_file = vim.api.nvim_buf_get_name(current_buf)
 
-      if current_file and current_file ~= "" then
-        local dir = vim.fn.fnamemodify(current_file, ":h")
+      if current_file and current_file ~= '' then
+        local dir = vim.fn.fnamemodify(current_file, ':h')
         oil.open(dir)
       else
         oil.open()
