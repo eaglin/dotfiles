@@ -1,0 +1,61 @@
+#!/bin/bash
+
+CONFIG_DIR="$HOME/.config/sketchybar"
+# source "$CONFIG_DIR/colors-catppuccin.sh" # Importar colores
+#
+source "$CONFIG_DIR/colors.sh" # Loads all defined colors
+sketchybar --add event aerospace_workspace_change
+for sid in 1 2 3 4 5 6 7 8 9 0; do
+
+  sketchybar --add item space."$sid" left \
+    --subscribe space."$sid" aerospace_workspace_change display_change system_woke \
+    --set space."$sid" \
+    label="$sid" \
+    background.drawing=on \
+    background.corner_radius=14 \
+    label.font="JetBrainsMono Nerd Font:Bold:14.0" \
+    icon.drawing=off \
+    background.height=18 \
+    label.padding_right=6 \
+    label.padding_left=6 \
+    padding_left=6 \
+    padding_right=6 \
+    click_script="aerospace workspace $sid" \
+    script="$CONFIG_DIR/plugins/space_icon.sh $sid"
+done
+# #!/bin/bash
+#
+# sketchybar --add event aerospace_workspace_change
+# CONFIG_DIR="$HOME/.config/sketchybar"
+# source "$CONFIG_DIR/helpers/icon_map.sh"
+# source "$CONFIG_DIR/colors.sh"
+#
+# # Array para guardar los nombres de los items
+# space_items=()
+#
+# for sid in $(aerospace list-workspaces --all); do
+#   sketchybar --add item space.$sid left \
+#     --subscribe space.$sid aerospace_workspace_change \
+#     --subscribe space.$sid front_app_switched \
+#     --set space.$sid \
+#     label="$sid" \
+#     script="$CONFIG_DIR/plugins/space_icon.sh $sid" \
+#     click_script="aerospace workspace $sid"
+#
+#   # Agregar al array
+#   space_items+=("space.$sid")
+# done
+#
+# CREAR el bracket con todos los items de workspace
+#
+# sketchybar --add event aerospace_workspace_change
+#
+# for sid in $(aerospace list-workspaces --all); do
+#   sketchybar --add item space.$sid left \
+#     --subscribe front_app front_app_switched \
+#     --subscribe space.$sid aerospace_workspace_change \
+#     --set space.$sid \
+#       label="$sid" \
+#       script="$CONFIG_DIR/plugins/space_icon.sh $sid" \
+#       click_script="aerospace workspace $sid"
+# done
