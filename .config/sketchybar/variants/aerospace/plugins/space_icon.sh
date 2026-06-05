@@ -2,7 +2,7 @@
 
 CONFIG_DIR="$HOME/.config/sketchybar"
 source "$CONFIG_DIR/colors.sh"
-FOCUSED_WORKSPACE=$(yabai -m query --spaces --space 2>/dev/null | jq -r '.index')
+FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused --format "%{workspace}" 2>/dev/null)
 
 if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
   sketchybar --set "$NAME" \
@@ -10,7 +10,7 @@ if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
     background.color="$IRIS" \
     label.color="$BASE"
 else
-  APPS=$(yabai -m query --windows --space "$1" 2>/dev/null | jq 'length')
+  APPS=$(aerospace list-windows --workspace "$1" --count 2>/dev/null)
 
   if [ "$APPS" = 0 ]; then
     sketchybar --set "$NAME" \

@@ -54,13 +54,13 @@ default=(
 )
 sketchybar --default "${default[@]}"
 
-#####AEROSPACE#####
+##### YABAI #####
 # Minimal design: Only workspace indicators on the left
 
 # Removed for minimal design:
 # source "$CONFIG_DIR/items/power_menu.sh"
 
-source "$CONFIG_DIR/items/aerospaces.sh"
+source "$CONFIG_DIR/items/spaces.sh"
 
 # Removed for minimal design (spacer and front app):
 # sketchybar --add item space_right_spaces left \

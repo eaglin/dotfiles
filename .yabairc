@@ -1,0 +1,56 @@
+#!/usr/bin/env sh
+
+# Layout and spacing ported from the Aerospace config.
+yabai -m config \
+  layout bsp \
+  split_type auto \
+  window_placement second_child \
+  window_insertion_point focused \
+  auto_balance off \
+  mouse_follows_focus off \
+  focus_follows_mouse off \
+  window_origin_display default \
+  window_zoom_persist on \
+  window_shadow on \
+  window_animation_duration 0.0 \
+  window_opacity off \
+  active_window_opacity 1.0 \
+  normal_window_opacity 1.0 \
+  top_padding 10 \
+  bottom_padding 10 \
+  left_padding 10 \
+  right_padding 10 \
+  window_gap 10 \
+  external_bar all:40:0 \
+  mouse_modifier alt \
+  mouse_action1 move \
+  mouse_action2 resize \
+  mouse_drop_action swap
+
+# App placement. Yabai rules match app names, not bundle IDs.
+yabai -m rule --add app="^Safari$" space=1
+yabai -m rule --add app="^Notes$" space=1 manage=off
+yabai -m rule --add app="^Google Chrome$" space=1
+yabai -m rule --add app="^OBS$" space=1 manage=off
+
+yabai -m rule --add app="^DaVinci Resolve$" space=2
+yabai -m rule --add app="^Lark$" space=2
+
+yabai -m rule --add app="^Ghostty$" space=3
+yabai -m rule --add app="^Visual Studio Code$" space=3
+
+yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^Microsoft Teams$" manage=off
+yabai -m rule --add app="^Telegram$" manage=off
+yabai -m rule --add app="^MongoDB Compass$" manage=off
+yabai -m rule --add app="^Docker Desktop$" manage=off
+yabai -m rule --add app="^WhatsApp$" manage=off
+yabai -m rule --add app="^Karabiner-Elements$" manage=off
+
+# Keep SketchyBar in sync with yabai spaces/windows.
+yabai -m signal --add event=space_changed action="sketchybar --trigger yabai_space_change"
+yabai -m signal --add event=window_created action="sketchybar --trigger yabai_space_change"
+yabai -m signal --add event=window_destroyed action="sketchybar --trigger yabai_space_change"
+yabai -m signal --add event=window_focused action="sketchybar --trigger yabai_space_change"
+
+sketchybar --reload >/dev/null 2>&1 &

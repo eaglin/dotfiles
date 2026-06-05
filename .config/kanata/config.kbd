@@ -147,8 +147,8 @@
 (deflayer fkeys
   _    brdn   bru   mctl   sls   dtn   dnd   prev   pp   next   mute   vold   volu
   _    _      _     _      _     _     _     _      _    _      _      _      _      _
-  _    _      _     _      _     _     _     _      _    _      _      _      _      _
-  _    _      _     _      _     _     _     _      _    _      _      _      _
+  _    _      _     _      _     _     _     home   end  _      _      _      _      _
+  _    _      _     _      _     _     ◀     ▼      ▲    ▶      _      _      _
   _    _      _     _      _     _     _     _      _    _      _      _      _
   _    _      _     _                  _                   _      _      _      _      _
 )
