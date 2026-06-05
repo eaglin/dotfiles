@@ -33,15 +33,15 @@ alt - tab : yabai -m space --focus recent
 alt + shift - tab : yabai -m window --display next; yabai -m display --focus next
 
 # Apps
-alt - v : open -a "/Applications/Visual Studio Code.app"
-alt - o : open -a "/Applications/OBS.app"
-alt - n : open -a "/System/Applications/Notes.app"
+alt - o : yabai -m space --focus 1; open -a "/Applications/OBS.app"
+alt - n : yabai -m space --focus 1; open -a "/System/Applications/Notes.app"
 alt - t : open -a "/Applications/Telegram.app"
 alt - w : open -a "/Applications/WhatsApp.app"
-alt - r : open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"
-alt - g : open -a "/Applications/Ghostty.app"
+alt - r : yabai -m space --focus 2; open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"
+alt - g : yabai -m space --focus 3; open -a "/Applications/Ghostty.app"
+alt - i : yabai -m space --focus 4; open -a "IntelliJ IDEA"
 alt - c : open -a "/Applications/CapCut.app"
-alt - s : open -a "/Applications/Safari.app"
+alt - s : yabai -m space --focus 1; open -a "/Applications/Zen.app"
 alt - f : open -a "/System/Library/CoreServices/Finder.app"
 
 # Service-like shortcuts from Aerospace.

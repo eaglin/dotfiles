@@ -27,8 +27,27 @@ yabai -m config \
   mouse_action2 resize \
   mouse_drop_action swap
 
+# Highlight the focused window. Restarting yabai should not leave duplicate borders.
+killall borders >/dev/null 2>&1
+borders \
+  active_color=0xff00d9ff \
+  inactive_color=0xff26233a \
+  width=5.0 \
+  hidpi=on \
+  ax_focus=on \
+  blacklist="Finder,System Settings,Karabiner-Elements" &
+
+# Ensure a predictable set of Spaces for skhd shortcuts.
+desired_spaces=5
+current_spaces=$(yabai -m query --spaces --display | jq 'length')
+
+while [ "$current_spaces" -lt "$desired_spaces" ]; do
+  yabai -m space --create || break
+  current_spaces=$((current_spaces + 1))
+done
+
 # App placement. Yabai rules match app names, not bundle IDs.
-yabai -m rule --add app="^Safari$" space=1
+yabai -m rule --add app="^Zen$" space=1
 yabai -m rule --add app="^Notes$" space=1 manage=off
 yabai -m rule --add app="^Google Chrome$" space=1
 yabai -m rule --add app="^OBS$" space=1 manage=off
@@ -37,7 +56,8 @@ yabai -m rule --add app="^DaVinci Resolve$" space=2
 yabai -m rule --add app="^Lark$" space=2
 
 yabai -m rule --add app="^Ghostty$" space=3
-yabai -m rule --add app="^Visual Studio Code$" space=3
+
+yabai -m rule --add app="^IntelliJ IDEA" space=4
 
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Microsoft Teams$" manage=off
