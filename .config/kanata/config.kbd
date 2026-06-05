@@ -1,0 +1,169 @@
+;; Video related to this file
+;; https://youtu.be/jvJ3f4HHiMY
+
+;; Kanata docs
+;; https://github.com/jtroo/kanata/blob/main/docs/config.adoc
+
+;; OS key code mappings
+;; https://github.com/jtroo/kanata/blob/main/parser/src/keys/mod.rs
+
+(defcfg
+  process-unmapped-keys yes
+  ;; danger-enable-cmd yes
+  log-layer-changes no
+  concurrent-tap-hold yes
+  macos-dev-names-include (
+"Apple Internal Keyboard / Trackpad"
+  )
+  ;; When any non-chord activation happens, this timeout begins. Until this timeout expires
+  ;; all inputs will immediately skip chords processing and be processed by the active layer.
+  ;; chords-v2-min-idle 250
+)
+
+;; Variables
+(defvar
+ tap-time  200
+ hold-time 150
+ chord-time 80
+ left-hand-keys (q w e r t a s d f g z x c v b)
+ right-hand-keys (y u i o p h j k l ; ' n m , . /)
+)
+
+;; Only one defsrc is allowed.
+;;
+;; defsrc defines the keys that will be intercepted by kanata. The order of the
+;; keys matches with deflayer declarations and all deflayer declarations must
+;; have the same number of keys as defsrc. Any keys not listed in defsrc will
+;; be passed straight to the operating system.
+(defsrc
+  esc    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv      1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab    q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps   a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft  z    x    c    v    b    n    m    ,    .    /    ▲   rsft
+  fn    lctl  lalt lmet          spc         rmet ralt ◀    ▼    ▶
+)
+
+;; scams
+(defalias
+  scam6 S-C-A-M-6 ;; homerow
+  scam0 S-C-A-M-0 ;; cleanshot capture area
+  scam9 S-C-A-M-9 ;; cleanshot capture previous area
+  scamt S-C-A-M-tab ;; cleanshot capture history
+  scam= S-C-A-M-= ;; cleanshot capture history
+  scamw S-C-A-M-w ;; paste app
+  scamz S-C-A-M-z ;; mouseless app
+  scamd S-C-A-M-d ;; presentify app
+)
+
+
+(defalias
+  ;; Home-row modifiers. Same-hand rolls resolve as taps; opposite-hand keys can trigger holds.
+  mlmet (tap-hold-release-keys $tap-time $hold-time d lmet $left-hand-keys)
+  mrmet (tap-hold-release-keys $tap-time $hold-time k rmet $right-hand-keys)
+  mlalt (tap-hold-release-keys $tap-time $hold-time s lalt $left-hand-keys)
+  mralt (tap-hold-release-keys $tap-time $hold-time l ralt $right-hand-keys)
+  mlctl (tap-hold-release-keys $tap-time $hold-time a lctl $left-hand-keys)
+  mrctl (tap-hold-release-keys $tap-time $hold-time ; rctl $right-hand-keys)
+  mlsft (tap-hold-release-keys $tap-time $hold-time f lsft $left-hand-keys)
+  mrsft (tap-hold-release-keys $tap-time $hold-time j rsft $right-hand-keys)
+
+  ;; Double actions,.
+  mcopy (tap-hold $tap-time $hold-time c M-c)
+  mpast (tap-hold $tap-time $hold-time v M-v)
+  mmtab (tap-hold $tap-time $hold-time z M-tab)
+  mmgrv (tap-hold $tap-time $hold-time x M-grv)
+  mescc (tap-hold $tap-time $hold-time esc caps)
+  mretu (tap-hold $tap-time $hold-time tab ret)
+
+  ;; Other layers tap-hold-press
+  ;; mapr configured for both the glove80 and the macbook keyboard
+  msymb (layer-while-held symb)
+  mnavi (tap-hold-press $tap-time $hold-time esc (layer-toggle navi))
+  mfn (layer-while-held fkeys)
+
+
+
+  ;; Multi
+  mhypr (tap-hold $tap-time $hold-time esc (multi lsft lctl lalt lmet)) ;; Hyper key
+
+)
+
+(defalias
+  ;; OBS Controls
+  obsrec S-M-r  ;; Cmd+Shift+R - Start/Stop Recording
+  
+  ;; Bluetooth & Audio Controls
+  ;; btcon (cmd bash -c "blueutil --connect 2d-3f-6a-2e-e7-03 && sleep 2 && SwitchAudioSource -s 'X08' && SwitchAudioSource -t input -s 'X08'")
+  ;; btdis (cmd bash -c "blueutil --disconnect 2d-3f-6a-2e-e7-03 && SwitchAudioSource -s 'Altavoces del MacBook Pro' && SwitchAudioSource -t input -s 'MacBook Pro Microphone'")
+  ;; audx08 (cmd bash -c "SwitchAudioSource -s 'X08' && SwitchAudioSource -t input -s 'X08'")
+  ;; audmbp (cmd bash -c "SwitchAudioSource -s 'Altavoces del MacBook Pro' && SwitchAudioSource -t input -s 'MacBook Pro Microphone'")
+)
+
+;; Main layer
+;; Set cmd on "d" due to cmd+r, cmd+f
+(deflayer main
+  ;;     a      s      d      f      g      h      j      k      l      ;      '
+  esc    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv    1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab    q      w      e      r      t      y      u      i      o      p      [      ]      \
+  @mhypr @mlctl @mlalt @mlmet @mlsft g      h      @mrsft @mrmet @mralt @mrctl  '       ret
+  lsft   z      x      c      v      b      n      m      ,      .      /      ▲   rsft
+  @mfn lctl lalt @msymb           spc               rmet      ralt       ◀      ▼      ▶
+)
+
+
+;; The user executing the command is the user that kanata was started with. 
+;; For example, if kanata was started by root, the command will be run by 
+;; the root user. If you need to execute as a different user, on Unix platforms 
+;; you can use sudo -u USER before the rest of your command to achieve this.
+(defalias
+  ;;saircn (cmd open "btt://execute_assigned_actions_for_trigger/?uuid=9A1CFA49-416C-480E-9430-184D2DAEE1CA") ;; Connect airpods
+  ;;sairsw (cmd bash -c "/opt/homebrew/bin/SwitchAudioSource -s 'AirPods Pro'; /opt/homebrew/bin/SwitchAudioSource -t input -s 'AirPods Pro'") ;; Switch to airpods
+)
+
+;; To live reload / hot reload the config:
+;; If kanata can’t parse the file, the previous configuration will continue to be used.
+
+(deflayer symb
+  esc  XX     XX      XX      XX      XX      XX      XX      XX      XX      XX      XX      XX
+  grv  XX     XX      XX      XX      XX      XX      XX      XX      XX      XX      XX      XX    XX
+  tab  grv    S-2     S-3     S-4     S-'     S-'     S-9     S-0     S--     XX      XX      XX    XX
+  XX   XX     XX      XX      XX      XX      S-7     S-[     S-]     S-=     XX      XX      ret
+  lsft XX     XX      XX      XX      XX      S-/     [       ]       S--     S-,     ▲       rsft
+  fn   lctl lalt lmet                  spc                       rmet    ralt    ◀      ▼       ▶
+)
+
+(deflayer navi
+  ;;   a      s       d       f       g       h       j       k       l       ;       '
+  esc  XX     XX      XX      XX      XX      XX      XX      XX      XX      XX      XX      XX
+  grv  XX     XX      XX      XX      XX      XX      XX      XX      XX      XX      XX      XX    del
+@scamt @scam0 @scamw  @scamd  XX      XX      S-A-◀   S-A-▼   S-A-▲   S-A-▶      XX      XX      XX    XX
+  XX   @scam= @scam9     M-[     M-]     XX      ◀       ▼       ▲       ▶       XX      XX      XX
+  lsft XX     XX      XX      XX      XX      XX      XX      XX      XX      XX      ▲       rsft
+  fn   lctl lalt lmet                  _                      rmet    ralt    ◀      ▼       ▶
+)
+
+(deflayer fkeys
+  _    brdn   bru   mctl   sls   dtn   dnd   prev   pp   next   mute   vold   volu
+  _    _      _     _      _     _     _     _      _    _      _      _      _      _
+  _    _      _     _      _     _     _     _      _    _      _      _      _      _
+  _    _      _     _      _     _     _     _      _    _      _      _      _
+  _    _      _     _      _     _     _     _      _    _      _      _      _
+  _    _      _     _                  _                   _      _      _      _      _
+)
+
+(defchordsv2
+  ;; OBS Controls
+  (q w e) @obsrec $chord-time first-release ()      ;; Start/Stop Recording
+  
+  ;; Bluetooth Management
+  ;; (e r t) @btcon $chord-time first-release ()       ;; Connect X08 + switch audio
+  ;; (r t y) @btdis $chord-time first-release ()       ;; Disconnect X08 + switch to speakers
+  ;; (d f g) @audx08 $chord-time first-release ()      ;; Switch audio to X08 (already connected)
+  ;; (c v b) @audmbp $chord-time first-release ()      ;; Switch audio to MacBook speakers
+  
+  ;; Existing zoom chords
+  (w e r) M-= $chord-time first-release ()          ;; zoom in
+  (s d f) M-- $chord-time first-release ()          ;; zoom out
+)
