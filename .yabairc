@@ -11,18 +11,17 @@ yabai -m config \
   focus_follows_mouse off \
   window_origin_display default \
   window_zoom_persist on \
-  window_shadow on \
+  window_shadow off \
   window_animation_duration 0.0 \
-  window_opacity off \
-  active_window_opacity 1.0 \
-  normal_window_opacity 1.0 \
+  window_opacity on \
+  active_window_opacity 0.3 \
+  normal_window_opacity 0.3 \
   top_padding 10 \
   bottom_padding 10 \
   left_padding 10 \
   right_padding 10 \
   window_gap 10 \
   external_bar all:40:0 \
-  mouse_modifier alt \
   mouse_action1 move \
   mouse_action2 resize \
   mouse_drop_action swap
@@ -35,10 +34,10 @@ borders \
   width=5.0 \
   hidpi=on \
   ax_focus=on \
-  blacklist="Finder,System Settings,Karabiner-Elements" &
+  blacklist="System Settings,Karabiner-Elements"
 
 # Ensure a predictable set of Spaces for skhd shortcuts.
-desired_spaces=5
+desired_spaces=9
 current_spaces=$(yabai -m query --spaces --display | jq 'length')
 
 while [ "$current_spaces" -lt "$desired_spaces" ]; do
@@ -72,5 +71,8 @@ yabai -m signal --add event=space_changed action="sketchybar --trigger yabai_spa
 yabai -m signal --add event=window_created action="sketchybar --trigger yabai_space_change"
 yabai -m signal --add event=window_destroyed action="sketchybar --trigger yabai_space_change"
 yabai -m signal --add event=window_focused action="sketchybar --trigger yabai_space_change"
+
+# When the focused window closes, keep focus on another window in the same Space.
+yabai -m signal --add event=window_destroyed active=yes label=focus_current_space_window action="sleep 0.05; window_id=\$(yabai -m query --spaces --space | jq -r '.\"windows\"[-1] // empty'); [ -n \"\$window_id\" ] && yabai -m window --focus \"\$window_id\""
 
 sketchybar --reload >/dev/null 2>&1 &
