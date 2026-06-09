@@ -4,7 +4,7 @@ CONFIG_DIR="$HOME/.config/sketchybar"
 source "$CONFIG_DIR/colors.sh"
 sketchybar --add event yabai_space_change
 
-for sid in 1 2 3 4 5; do
+for sid in 1 2 3 4 5 6 7 8 9; do
   sketchybar --add space space."$sid" left \
     --set space."$sid" \
     space="$sid" \
