@@ -58,7 +58,7 @@ yabai -m rule --add app="^Ghostty$" space=3
 
 yabai -m rule --add app="^IntelliJ IDEA" space=4
 
-yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^Finder$" manage=off float=on sticky=on layer=above
 yabai -m rule --add app="^Microsoft Teams$" manage=off
 yabai -m rule --add app="^Telegram$" manage=off
 yabai -m rule --add app="^MongoDB Compass$" manage=off

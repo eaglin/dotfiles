@@ -30,9 +30,32 @@ export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
 
+# ls replacement — uncomment ONE block at a time and restart the shell.
+# Icons need a Nerd Font installed in your terminal (e.g. MesloLGS NF).
+
+# --- eza (active) ---
+if command -v eza >/dev/null; then
+  alias ls='eza --icons --group-directories-first'
+  alias l='eza -l --icons --group-directories-first'
+  alias ll='eza -l --icons --group-directories-first --header --git'
+  alias la='eza -la --icons --group-directories-first --header --git'
+  alias lt='eza --tree --level=2 --icons --group-directories-first'
+  alias lta='eza --tree --level=2 --icons --group-directories-first -a'
+fi
+
+# --- lsd (commented — uncomment to swap) ---
+# if command -v lsd >/dev/null; then
+#   alias ls='lsd --icon=always --group-dirs=first'
+#   alias l='lsd -l --icon=always --group-dirs=first'
+#   alias ll='lsd -l --icon=always --group-dirs=first --header --git'
+#   alias la='lsd -la --icon=always --group-dirs=first --header --git'
+#   alias lt='lsd --tree --depth=2 --icon=always --group-dirs=first'
+#   alias lta='lsd --tree --depth=2 --icon=always --group-dirs=first -a'
+# fi
+
 # aliases
 alias fzfbat='fzf --preview="bat --theme=gruvbox-dark --color=always {}"'
-alias fzfnvim='nvim $(fzf --preview="bat --theme=catpuccin --color=always {}")'
+alias fzfnvim='nvim $(fzf --preview="bat --theme=gruvbox-dark  --color=always {}")'
 alias j!=jbang
 alias cdc='cd ~/.config/'
 alias kanata-start='sudo /Users/mvabal/.cargo/bin/kanata --cfg /Users/mvabal/.config/kanata/config.kbd'

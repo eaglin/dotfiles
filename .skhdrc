@@ -16,6 +16,13 @@ alt + shift - f : yabai -m window --toggle zoom-fullscreen
 alt - 0x1B : yabai -m window --resize left:-50:0 || yabai -m window --resize right:-50:0
 alt - 0x18 : yabai -m window --resize left:50:0 || yabai -m window --resize right:50:0
 
+# Layout toggles
+alt + ctrl - s : yabai -m space --layout $(yabai -m query --spaces --space | jq -r '.type | if . == "stack" then "bsp" else "stack" end')
+alt + ctrl - d : yabai -m space --layout $(yabai -m query --spaces --space | jq -r '.type | if . == "float" then "bsp" else "float" end')
+alt + ctrl - e : yabai -m window --toggle float
+alt + shift - 0x2B : yabai -m window --resize left:-50:0 || yabai -m window --resize right:-50:0
+alt + shift - 0x2F : yabai -m window --resize left:50:0 || yabai -m window --resize right:50:0
+
 # Spaces
 alt - 1 : yabai -m space --focus 1
 alt - 2 : yabai -m space --focus 2
@@ -43,13 +50,12 @@ alt + shift - tab : yabai -m window --display next; yabai -m display --focus nex
 # Apps
 alt - o : yabai -m space --focus 1; open -a "/Applications/OBS.app"
 alt - n : yabai -m space --focus 1; open -a "/System/Applications/Notes.app"
-alt - t : open -a "/Applications/Telegram.app"
 alt - w : open -a "/Applications/WhatsApp.app"
 alt - r : yabai -m space --focus 2; open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"
 alt - g : yabai -m space --focus 3; open -a "/Applications/Ghostty.app"
 alt - i : yabai -m space --focus 4; open -a "IntelliJ IDEA"
 alt - c : open -a "/Applications/CapCut.app"
-alt - s : yabai -m space --focus 1; open -a "/Applications/Zen.app"
+alt - s : yabai -m space --focus 1; open -a "/Applications/Google Chrome.app"
 alt - f : open -a "/System/Library/CoreServices/Finder.app"
 
 # Service-like shortcuts from Aerospace.
