@@ -8,7 +8,7 @@ local plugins_dir = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'plugins')
 local modules = {}
 
 for file_name, file_type in vim.fs.dir(plugins_dir) do
-  if file_type == 'file' and file_name:match '%.lua$' and file_name ~= 'init.lua' then
+  if (file_type == 'file' or file_type == 'link') and file_name:match '%.lua$' and file_name ~= 'init.lua' then
     local module = file_name:gsub('%.lua$', '')
     table.insert(modules, module)
   end

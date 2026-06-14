@@ -138,7 +138,8 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'java',
   group = vim.api.nvim_create_augroup('jdtls-java', { clear = true }),
   callback = function()
-    local root_dir = vim.fs.root(0, { '.git' }) or vim.fs.root(0, { 'mvnw', 'pom.xml' })
+    local root_dir = vim.fs.root(0, { 'mvnw', 'gradlew', 'pom.xml', 'build.gradle', 'build.gradle.kts', 'settings.gradle', 'settings.gradle.kts' })
+      or vim.fs.root(0, { '.git' })
     if not root_dir then return end
 
     local jdtls = vim.fn.exepath 'jdtls'
@@ -154,7 +155,6 @@ vim.api.nvim_create_autocmd('FileType', {
     if vim.uv.fs_stat(lombok) then
       vim.list_extend(cmd, {
         '--jvm-arg=-javaagent:' .. lombok,
-        '--jvm-arg=-Xbootclasspath/a:' .. lombok,
       })
     else
       vim.notify('JDTLS Lombok jar not found: ' .. lombok, vim.log.levels.WARN)
@@ -181,6 +181,7 @@ vim.api.nvim_create_autocmd('FileType', {
     map('n', '<leader>joi', jdtls_client.organize_imports, '[O]rganize [I]mports')
     map('n', '<leader>juc', jdtls_client.update_project_config, '[U]pdate Project [C]onfig')
     map('n', '<leader>jll', '<cmd>JdtShowLogs<CR>', 'Show JDTLS [L]ogs')
+    map('n', '<leader>jwr', '<cmd>JdtWipeDataAndRestart<CR>', '[W]ipe workspace and [R]estart')
 
     map('n', '<leader>jev', jdtls_client.extract_variable, '[E]xtract [V]ariable')
     map('v', '<leader>jev', function() jdtls_client.extract_variable(true) end, '[E]xtract [V]ariable')

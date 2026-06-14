@@ -9,7 +9,7 @@ vim.pack.add(plugins)
 require('snacks').setup {
   bigfile = { enabled = true },
   dashboard = {
-    enabled = true,
+    enabled = false,
     sections = {
       { section = 'header' },
       { section = 'keys', gap = 1, padding = 1 },
@@ -27,13 +27,29 @@ require('snacks').setup {
   scope = { enabled = true },
   scroll = { enabled = true },
   statuscolumn = { enabled = true },
-  words = { enabled = true },
+  words = {
+    enabled = true,
+    debounce = 200,
+    notify_jump = false,
+    notify_end = true,
+    foldopen = true,
+    jumplist = true,
+    modes = { 'n', 'i', 'c' },
+    filter = function(buf)
+      return vim.bo[buf].buftype == ''
+        and vim.g.snacks_words ~= false
+        and vim.b[buf].snacks_words ~= false
+    end,
+  },
   styles = {
     notification = {
       -- wo = { wrap = true } -- Wrap notifications
     },
   },
 }
+
+Snacks.input.enable()
+vim.ui.select = Snacks.picker.select
 
 local keys = {
     -- Top Pickers & Explorer

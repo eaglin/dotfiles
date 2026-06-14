@@ -4,7 +4,6 @@
 -- ============================================================
 do
 	vim.loader.enable()
-  vim.schedule(function() require('vim._core.ui2').enable({}) end)vim.schedule(function() require('vim._core.ui2').enable({}) end)
 	vim.o.winborder = "rounded"
 	vim.o.pumborder = "rounded"
 	vim.g.mapleader = " "
