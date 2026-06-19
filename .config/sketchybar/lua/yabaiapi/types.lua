@@ -1,0 +1,133 @@
+---@meta
+
+---@class YabaiFrame
+---@field x number
+---@field y number
+---@field w number
+---@field h number
+
+---@class YabaiSpace
+---@field id                   integer
+---@field uuid                 string
+---@field index                integer
+---@field label                string
+---@field type                 "bsp"|"stack"|"float"
+---@field display              integer
+---@field windows              integer[]
+---@field first-window         integer
+---@field last-window          integer
+---@field has-focus            boolean
+---@field is-visible           boolean
+---@field is-native-fullscreen boolean
+
+---@class YabaiWindow
+---@field id                   integer
+---@field pid                  integer
+---@field app                  string
+---@field title                string
+---@field scratchpad           string
+---@field frame                YabaiFrame
+---@field role                 string
+---@field subrole              string
+---@field root-window          boolean
+---@field display              integer
+---@field space                integer
+---@field level                integer
+---@field sub-level            integer
+---@field layer                string
+---@field sub-layer            string
+---@field opacity              number
+---@field split-type           "vertical"|"horizontal"|"none"
+---@field split-child          "first_child"|"second_child"|"none"
+---@field stack-index          integer
+---@field can-move             boolean
+---@field can-resize           boolean
+---@field has-focus            boolean
+---@field has-shadow           boolean
+---@field has-parent-zoom      boolean
+---@field has-fullscreen-zoom  boolean
+---@field has-ax-reference     boolean
+---@field is-native-fullscreen boolean
+---@field is-visible           boolean
+---@field is-minimized         boolean
+---@field is-hidden            boolean
+---@field is-floating          boolean
+---@field is-sticky            boolean
+---@field is-grabbed           boolean
+
+---@class YabaiDisplay
+---@field id     integer
+---@field uuid   string
+---@field index  integer
+---@field label  string
+---@field frame  YabaiFrame
+---@field spaces integer[]
+
+---@class YabaiRealWindow
+---@field space integer
+---@field app   string
+---@field id    integer
+
+---@class YabaiLayoutEntry
+---@field has_focus boolean
+---@field apps      string[]
+
+---@alias YabaiLayout table<integer, YabaiLayoutEntry>
+
+---@class YabaiQuery
+---@field spaces         fun(cb: fun(spaces: YabaiSpace[]|nil, err?: string))
+---@field windows        fun(cb: fun(windows: YabaiWindow[]|nil, err?: string))
+---@field displays       fun(cb: fun(displays: YabaiDisplay[]|nil, err?: string))
+---@field is_real_window fun(w: YabaiWindow): boolean
+---@field real_windows   fun(cb: fun(wins: YabaiRealWindow[]|nil, err?: string))
+---@field layout         fun(cb: fun(layout: YabaiLayout|nil, err?: string))
+
+---@class YabaiCommand
+---@field focus_space   fun(idx: integer)
+---@field create_space  fun()
+---@field destroy_space fun(idx?: integer)
+---@field focus_window  fun(id: integer)
+
+---@class YabaiAPI
+---@field _sbar           SbarModule|nil
+---@field _sbar_get       fun(): SbarModule
+---@field attach          fun(sbar: SbarModule)
+---@field cli             fun(args: string, cb: fun(result: any, err?: string))
+---@field query           YabaiQuery
+---@field command         YabaiCommand
+---@field events          YabaiEvents
+---@field register_events fun()
+
+---@class YabaiEvents
+---@field application_launched         "yabai_application_launched"
+---@field application_terminated       "yabai_application_terminated"
+---@field application_front_switched   "yabai_application_front_switched"
+---@field application_activated        "yabai_application_activated"
+---@field application_deactivated      "yabai_application_deactivated"
+---@field application_visible          "yabai_application_visible"
+---@field application_hidden           "yabai_application_hidden"
+---@field window_created               "yabai_window_created"
+---@field window_destroyed             "yabai_window_destroyed"
+---@field window_focused               "yabai_window_focused"
+---@field window_moved                 "yabai_window_moved"
+---@field window_resized               "yabai_window_resized"
+---@field window_minimized             "yabai_window_minimized"
+---@field window_deminimized           "yabai_window_deminimized"
+---@field window_title_changed         "yabai_window_title_changed"
+---@field space_created                "yabai_space_created"
+---@field space_destroyed              "yabai_space_destroyed"
+---@field space_changed                "yabai_space_changed"
+---@field display_added                "yabai_display_added"
+---@field display_removed              "yabai_display_removed"
+---@field display_moved                "yabai_display_moved"
+---@field display_resized              "yabai_display_resized"
+---@field display_changed              "yabai_display_changed"
+---@field mission_control_enter        "yabai_mission_control_enter"
+---@field mission_control_exit         "yabai_mission_control_exit"
+---@field dock_did_change_pref         "yabai_dock_did_change_pref"
+---@field dock_did_restart             "yabai_dock_did_restart"
+---@field menu_bar_hidden_changed      "yabai_menu_bar_hidden_changed"
+---@field all                          string[]
+---@field for_layout_refresh           string[]
+---@field for_focus                    string[]
+---@field for_display                  string[]

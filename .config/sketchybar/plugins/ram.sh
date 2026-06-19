@@ -1,4 +1,17 @@
-#!/usr/bin/env bash
-#ram.sh
+#!/bin/bash
+# Memory used %: active + wired + compressed (excludes inactive/cached pages)
+read -r active inactive wired compressed psize <<EOF
+$(vm_stat | awk '
+  /Pages active/                 { gsub(/\./, ""); a=$3 }
+  /Pages inactive/               { gsub(/\./, ""); i=$3 }
+  /Pages wired down/             { gsub(/\./, ""); w=$4 }
+  /Pages occupied by compressor/ { gsub(/\./, ""); c=$5 }
+  /page size of/                 { gsub(/[^0-9]/, ""); p=$NF }
+  END { print a, i, w, c, p }
+')
+EOF
 
-sketchybar -m --set "memory" label="$(memory_pressure | grep "System-wide memory free percentage:" | awk '{ printf("%02.0f\n", 100-$5"%") }')%"
+TOTAL=$(sysctl -n hw.memsize)
+USED=$(( (active + wired + compressed) * psize ))
+PCT=$(( USED * 100 / TOTAL ))
+sketchybar --set memory label="${PCT}%"

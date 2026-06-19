@@ -1,0 +1,101 @@
+local logger = require("helpers.logger")
+IS_SYSTEM_SLEEPING = false
+
+local function _popup_item_name(target)
+    if type(target) == "table" and type(target.name) == "string" then
+        return target.name
+    end
+    if type(target) == "string" then
+        return target
+    end
+    return nil
+end
+
+local function _is_popup_drawing(item_name)
+    local query = Sbar.query(item_name)
+    if query == nil or query.popup == nil then
+        return false
+    end
+    local drawing = query.popup.drawing
+    if drawing == true or drawing == "on" or drawing == "1" then return true end
+    if drawing == false or drawing == "off" or drawing == "0" then return false end
+    return false
+end
+
+local system_watcher = Sbar.add("item", "system_watcher", {
+    drawing = false,
+})
+
+system_watcher:subscribe("system_will_sleep", function()
+    IS_SYSTEM_SLEEPING = true
+end)
+
+system_watcher:subscribe("system_woke", function()
+    IS_SYSTEM_SLEEPING = false
+end)
+
+POPUP_TOGGLE = function(name)
+    local popup_name = _popup_item_name(name)
+    if popup_name == nil then return end
+    local currently_open = _is_popup_drawing(popup_name)
+    Sbar.set(popup_name, { popup = { drawing = not currently_open } })
+end
+
+POPUP_TOGGLE_CLJ = function(name)
+    return function() POPUP_TOGGLE(name) end
+end
+
+POPUP_OFF = function(name)
+    local popup_name = _popup_item_name(name)
+    if popup_name == nil then return end
+    Sbar.set(popup_name, { popup = { drawing = false } })
+end
+
+POPUP_ON = function(name)
+    local popup_name = _popup_item_name(name)
+    if popup_name == nil then return end
+    Sbar.set(popup_name, { popup = { drawing = true } })
+end
+
+IS_EMPTY = function(s)
+    return s == nil or s == ""
+end
+
+EXEC_QUIET = function(cmd, callback)
+    if IS_SYSTEM_SLEEPING then return end
+    Sbar.exec(cmd, callback)
+end
+
+DELAY = function(seconds, callback)
+    if type(callback) ~= "function" then return end
+    local duration = tonumber(seconds) or 0
+    if duration <= 0 then callback(); return end
+    Sbar.delay(duration, callback)
+end
+
+SETUP_POPUP = function(item)
+    item:subscribe("mouse.clicked", function()
+        POPUP_TOGGLE(item)
+    end)
+end
+
+SETUP_POPUP_HOVER = function(item, additional_entered_logic, additional_exited_logic)
+    item:subscribe("mouse.entered", function()
+        item:set({ popup = { drawing = true } })
+        if additional_entered_logic then additional_entered_logic() end
+    end)
+    item:subscribe({ "mouse.exited", "mouse.exited.global" }, function()
+        item:set({ popup = { drawing = false } })
+        if additional_exited_logic then additional_exited_logic() end
+    end)
+end
+
+SETUP_STANDARD_CLICKS = function(item, update_trigger_name)
+    item:subscribe("mouse.clicked", function(env)
+        if env.BUTTON == "left" then
+            POPUP_TOGGLE(env.NAME)
+        elseif env.BUTTON == "right" and update_trigger_name then
+            Sbar.trigger(update_trigger_name)
+        end
+    end)
+end

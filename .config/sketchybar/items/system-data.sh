@@ -3,9 +3,9 @@
 
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 
-export CPU=􀫥
-export DISK=􀤄
-export MEMORY=􀫦
+export CPU=󰘚
+export DISK=󰋊
+export MEMORY=󰍛
 cpu=(
   label.color="$TEXT"
   icon="$CPU"

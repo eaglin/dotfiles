@@ -4,27 +4,19 @@
 yabai -m config \
   layout bsp \
   split_type auto \
-  window_placement second_child \
-  window_insertion_point focused \
-  auto_balance off \
-  mouse_follows_focus off \
-  focus_follows_mouse off \
-  window_origin_display default \
-  window_zoom_persist on \
-  window_shadow off \
-  window_animation_duration 0.0 \
-  window_opacity on \
-  active_window_opacity 0.3 \
-  normal_window_opacity 0.3 \
-  top_padding 10 \
-  bottom_padding 10 \
-  left_padding 10 \
-  right_padding 10 \
   window_gap 10 \
-  external_bar all:40:0 \
   mouse_action1 move \
   mouse_action2 resize \
+  external_bar all:40:0 \
   mouse_drop_action swap
+# Set all padding and gaps to 20pt (default: 0)
+yabai -m config bottom_padding 10	
+yabai -m config left_padding   10	
+yabai -m config right_padding  10	
+yabai -m config window_gap     10	
+
+# Override gaps for space 2 only
+yabai -m config --space 2 window_gap 0
 
 # Highlight the focused window. Restarting yabai should not leave duplicate borders.
 killall borders >/dev/null 2>&1
@@ -36,14 +28,15 @@ borders \
   ax_focus=on \
   blacklist="System Settings,Karabiner-Elements"
 
-# Ensure a predictable set of Spaces for skhd shortcuts.
-desired_spaces=9
-current_spaces=$(yabai -m query --spaces --display | jq 'length')
-
-while [ "$current_spaces" -lt "$desired_spaces" ]; do
-  yabai -m space --create || break
-  current_spaces=$((current_spaces + 1))
-done
+yabai -m config --space 1 layout float
+# # Ensure a predictable set of Spaces for skhd shortcuts.
+# desired_spaces=9
+# current_spaces=$(yabai -m query --spaces --display | jq 'length')
+#
+# while [ "$current_spaces" -lt "$desired_spaces" ]; do
+#   yabai -m space --create || break
+#   current_spaces=$((current_spaces + 1))
+# done
 
 # App placement. Yabai rules match app names, not bundle IDs.
 yabai -m rule --add app="^Zen$" space=1
@@ -51,19 +44,15 @@ yabai -m rule --add app="^Notes$" space=1 manage=off
 yabai -m rule --add app="^Google Chrome$" space=1
 yabai -m rule --add app="^OBS$" space=1 manage=off
 
-yabai -m rule --add app="^DaVinci Resolve$" space=2
-yabai -m rule --add app="^Lark$" space=2
-
 yabai -m rule --add app="^Ghostty$" space=3
 
 yabai -m rule --add app="^IntelliJ IDEA" space=4
 
-yabai -m rule --add app="^Finder$" manage=off float=on sticky=on layer=above
-yabai -m rule --add app="^Microsoft Teams$" manage=off
-yabai -m rule --add app="^Telegram$" manage=off
-yabai -m rule --add app="^MongoDB Compass$" manage=off
-yabai -m rule --add app="^Docker Desktop$" manage=off
-yabai -m rule --add app="^WhatsApp$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^(System Settings|Ajustes del Sistema)$" manage=off
+yabai -m rule --add app="^Microsoft Teams$" manage=off space=9
+yabai -m rule --add app="^Docker Desktop$" manage=off space=8
+yabai -m rule --add app="^WhatsApp$" manage=off space=9
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
 
 # Keep SketchyBar in sync with yabai spaces/windows.

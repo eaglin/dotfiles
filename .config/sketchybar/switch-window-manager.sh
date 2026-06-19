@@ -6,9 +6,9 @@ CONFIG_DIR="$HOME/.config/sketchybar"
 variant="${1:-}"
 
 case "$variant" in
-  aerospace|yabai) ;;
+  yabai) ;;
   *)
-    printf 'Usage: %s aerospace|yabai\n' "$(basename "$0")" >&2
+    printf 'Usage: %s yabai\n' "$(basename "$0")" >&2
     exit 1
     ;;
 esac

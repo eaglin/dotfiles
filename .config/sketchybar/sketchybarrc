@@ -19,10 +19,10 @@ source "$CONFIG_DIR/colors.sh" # Loads Rosé Pine colors
 # https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 bar=(
   position=top
-  height=32
+  height=30
   color=$BASE
   margin=240
-  y_offset=8
+  y_offset=4
   corner_radius=50
   padding_left=10
   padding_right=20
@@ -77,6 +77,20 @@ source "$CONFIG_DIR/items/spaces.sh"
 ##### Adding Right Items #####
 # Items
 
+# Yabai layout indicator (center): click to cycle bsp -> stack -> float
+sketchybar --add event yabai_layout_change
+sketchybar --add item yabai center \
+  --set yabai \
+  icon="" \
+  icon.font="JetBrainsMono Nerd Font:Bold:18.0" \
+  icon.color="$TEXT" \
+  icon.padding_left=10 \
+  icon.padding_right=10 \
+  label.drawing=off \
+  script="$PLUGIN_DIR/yabai.sh" \
+  click_script="$PLUGIN_DIR/yabai_click.sh" \
+  --subscribe yabai space_change space_windows_change yabai_layout_change
+
 # sketchybar   --add item  ip_address right                              \
 #            --set       ip_address script="$PLUGIN_DIR/ip_address.sh" \
 #                                   update_freq=30                     \
@@ -120,11 +134,10 @@ source "$CONFIG_DIR/items/spaces.sh"
 source "$CONFIG_DIR/items/clock.sh"
 source "$CONFIG_DIR/items/battery.sh"
 source "$CONFIG_DIR/items/volume.sh"
-source "$CONFIG_DIR/items/bluetooth.sh"
 source "$CONFIG_DIR/items/wifi.sh"
 
-# Bracket for status icons (WiFi, Bluetooth, Volume, Battery)
-sketchybar --add bracket status wifi bt volume battery \
+# Bracket for status icons (WiFi, Volume, Battery)
+sketchybar --add bracket status wifi volume battery \
   --set status \
   background.drawing=on \
   background.color=$OVERLAY \

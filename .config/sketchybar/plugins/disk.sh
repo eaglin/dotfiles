@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
-#disk.sh
-
-sketchybar --set "$NAME" label="$(df -H | grep -E '^(/dev/disk3s5).' | awk '{ printf ("%s\n", $5) }')"
+#!/bin/bash
+# Disk usage % of the root volume (works on any APFS layout, no hardcoded disk id)
+sketchybar --set disk label="$(df -H / | tail -1 | awk '{ print $5 }')"

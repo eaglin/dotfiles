@@ -5,3 +5,14 @@
 ^\.DS_Store$
 ^\.claude/
 ^\.atl/
+# Secrets and machine-specific files
+^\.config/opencode/opencode\.jsonc$
+^\.config/opencode/node_modules$
+^\.config/opencode/package-lock\.json$
+^\.config/opencode/package\.json$
+^\.config/opencode/tui\.json$
+^\.config/gh/hosts\.yml$
+^\.ssh$
+^\.zsh_history$
+^\.zsh_secrets$
+^\.gitconfig$

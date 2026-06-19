@@ -24,12 +24,12 @@ fi
 if [[ $SSID != "" ]]; then
 
   ICON_COLOR=$PINE
-  ICON=􀙇
+  ICON=󰖩
 elif [[ $CURRENT_WIFI = "AirPort: Off" ]]; then
   ICON_COLOR=$PINE
-  ICON=􀙈
+  ICON=󰖪
 else
-  ICON=􀙈
+  ICON=󰖪
 fi
 
 render_bar_item() {
