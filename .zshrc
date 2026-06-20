@@ -9,6 +9,11 @@ if [[ -x "$BREW_BIN/brew" ]]; then
   eval "$($BREW_BIN/brew shellenv)"
 fi
 
+# Android SDK
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+
 # Local secrets. Put exports like OPENAI_API_KEY here instead of in .zshrc.
 [[ -f "$HOME/.zsh_secrets" ]] && source "$HOME/.zsh_secrets"
 
@@ -55,7 +60,8 @@ fi
 
 # aliases
 alias fzfbat='fzf --preview="bat --theme=gruvbox-dark --color=always {}"'
-alias fzfnvim='nvim $(fzf --preview="bat --theme=gruvbox-dark  --color=always {}")'
+alias fzfnvim='nvim $(fzf {}")'alias fzfnvim='fzf --preview="bat --theme=gruvbox-dark --color=always {}" --bind "enter:become(nvim {})"'
+
 alias j!=jbang
 alias cdc='cd ~/.config/'
 alias kanata-start='sudo /Users/mvabal/.cargo/bin/kanata --cfg /Users/mvabal/.config/kanata/config.kbd'
