@@ -11,15 +11,20 @@ alt + shift - k : yabai -m window --swap north
 alt + shift - l : yabai -m window --swap east
 
 # Layout
-alt - 0x2C : yabai -m space --layout bsp
+alt - 0x2C : yabai -m space --layout bsp; sketchybar --trigger yabai_layout_change
 alt + shift - f : yabai -m window --toggle zoom-fullscreen
 alt - 0x1B : yabai -m window --resize left:-50:0 || yabai -m window --resize right:-50:0
 alt - 0x18 : yabai -m window --resize left:50:0 || yabai -m window --resize right:50:0
 
 # Layout toggles
-alt + ctrl - s : yabai -m space --layout $(yabai -m query --spaces --space | jq -r '.type | if . == "stack" then "bsp" else "stack" end')
-alt + ctrl - d : yabai -m space --layout $(yabai -m query --spaces --space | jq -r '.type | if . == "float" then "bsp" else "float" end')
-alt + ctrl - e : yabai -m window --toggle float
+# Cycle layouts: bsp -> stack -> float -> bsp (alt+ctrl+space)
+alt + ctrl - 0x31 : yabai -m space --layout $(yabai -m query --spaces --space | jq -r '.type | if . == "bsp" then "stack" elif . == "stack" then "float" else "bsp" end') && sketchybar --trigger yabai_layout_change
+# Set specific layouts
+alt + ctrl - b : yabai -m space --layout bsp; sketchybar --trigger yabai_layout_change
+alt + ctrl - s : yabai -m space --layout stack; sketchybar --trigger yabai_layout_change
+alt + ctrl - f : yabai -m space --layout float; sketchybar --trigger yabai_layout_change
+# Toggle float on focused window
+alt + ctrl - e : yabai -m window --toggle float; sketchybar --trigger yabai_layout_change
 alt + shift - 0x2B : yabai -m window --resize left:-50:0 || yabai -m window --resize right:-50:0
 alt + shift - 0x2F : yabai -m window --resize left:50:0 || yabai -m window --resize right:50:0
 
@@ -48,17 +53,17 @@ alt - tab : yabai -m space --focus recent
 alt + shift - tab : yabai -m window --display next; yabai -m display --focus next
 
 # Apps
-alt - o : yabai -m space --focus 1; open -a "/Applications/OBS.app"
-alt - n : yabai -m space --focus 1; open -a "/System/Applications/Notes.app"
-alt - w : open -a "/Applications/WhatsApp.app"
-alt - r : yabai -m space --focus 2; open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"
-alt - g : yabai -m space --focus 3; open -a "/Applications/Ghostty.app"
-alt - i : yabai -m space --focus 4; open -a "IntelliJ IDEA"
-alt - c : open -a "/Applications/CapCut.app"
-alt - s : yabai -m space --focus 1; open -a "/Applications/Google Chrome.app"
-alt - f : open -a "/System/Library/CoreServices/Finder.app"
+ctrl + alt + cmd + shift - o : yabai -m space --focus 1; open -a "/Applications/OBS.app"
+ctrl + alt + cmd + shift - n : yabai -m space --focus 1; open -a "/System/Applications/Notes.app"
+ctrl + alt + cmd + shift - w : open -a "/Applications/WhatsApp.app"
+ctrl + alt + cmd + shift - r : yabai -m space --focus 2; open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"
+ctrl + alt + cmd + shift - g : yabai -m space --focus 3; open -a "/Applications/Ghostty.app"
+ctrl + alt + cmd + shift - i : yabai -m space --focus 4; open -a "IntelliJ IDEA"
+ctrl + alt + cmd + shift - c : open -a "/Applications/CapCut.app"
+ctrl + alt + cmd + shift - s : yabai -m space --focus 1; open -a "/Applications/Google Chrome.app"
+ctrl + alt + cmd + shift - f : open -a "/System/Library/CoreServices/Finder.app"
 
 # Service-like shortcuts from Aerospace.
-alt + shift - 0x29 : yabai -m config --space layout bsp
+alt + shift - 0x29 : yabai -m config --space layout bsp; sketchybar --trigger yabai_layout_change
 cmd + alt - h : true
 cmd - h : true
