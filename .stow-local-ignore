@@ -1,7 +1,0 @@
-^\.git$
-^README\.md$
-^install\.sh$
-^\.stow-local-ignore$
-^\.DS_Store$
-^\.claude/
-^\.atl/

@@ -57,6 +57,18 @@ do
 		},
 	})
 
+	local function jump_error(count)
+		return function()
+			vim.diagnostic.jump({
+				count = count,
+				severity = vim.diagnostic.severity.ERROR,
+			})
+		end
+	end
+
+	vim.keymap.set("n", "]e", jump_error(1), { desc = "Next error" })
+	vim.keymap.set("n", "[e", jump_error(-1), { desc = "Previous error" })
+
 	vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 	vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
