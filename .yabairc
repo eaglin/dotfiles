@@ -55,10 +55,9 @@ yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^(System Settings|Ajustes del Sistema)$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
 
-# Keep SketchyBar synchronized. Native focus handling is left to yabai/macOS.
-yabai -m signal --add label=sketchybar_space_changed event=space_changed action="sketchybar --trigger yabai_space_change"
+# Keep inactive Space indicators synchronized. SketchyBar handles Space and
+# focus changes through its rate-limited native events.
 yabai -m signal --add label=sketchybar_window_created event=window_created action="sketchybar --trigger yabai_space_change"
 yabai -m signal --add label=sketchybar_window_destroyed event=window_destroyed action="sketchybar --trigger yabai_space_change"
-yabai -m signal --add label=sketchybar_window_focused event=window_focused action="sketchybar --trigger yabai_space_change"
 
 sketchybar --reload >/dev/null 2>&1 &

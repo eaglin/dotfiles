@@ -1,0 +1,15 @@
+onboarding = false
+
+[keys]
+next_agent = "prefix+]"
+previous_agent = "prefix+["
+
+[ui.toast]
+delivery = "system"
+
+[ui]
+show_agent_labels_on_pane_borders = true
+
+[theme]
+name = "one-dark"
+auto_switch = false

@@ -1,0 +1,253 @@
+"vvideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+nnoremap <leader>rc :action IdeaVim.ReloadVimRc.reload<CR>
+
+"" -- Suggested options --
+
+
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+set timeoutlen=6000    " 2 segundOc
+
+
+" Do incremental searching.
+set incsearch
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+Plug "vim-scripts/argtextobj.vim"
+Plug 'easymotion/vim-easymotion'
+""Plug 'michaeljsmith/vim-indent-object'
+Plug 'preservim/nerdtree'
+Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-surround'
+
+set commentary
+" highlight search results
+set hlsearch
+" remove search highlights
+nnoremap <Esc> :nohlsearch<cr>
+" case-insensitive search
+set ignorecase
+" enable case-sensitive search when uppercased letter is present
+set smartcase
+" search while typing
+set incsearch
+set functiontextobj
+set mini-ai
+set which-key
+
+set scrolloff=5
+set incsearch
+set relativenumber
+set number
+syntax on
+
+let mapleader = " "
+" ------------------------------
+" Project Tree (como nvim-tree)
+" ------------------------------
+" Abrir/cerrar el panel del Project Tool Window con <leader>e
+" Toggle focus en el explorer con Ctrl+e
+
+"Telescope type actions
+map <leader>sc <Action>(GotoClass)
+map <leader>ss <Action>(GotoSymbol)
+map <leader>sa <Action>(GotoAction)
+"Code navigation
+map gd <Action>(GotoDeclaration)
+map gy <Action>(GotoTypeDeclaration)
+map gi <Action>(GotoImplementation)
+map gt <Action>(GotoTest)
+map gm <Action>(GotoSuperMethod)
+nnoremap gD :action ShowUsages<CR>
+
+map <leader>b <Action>(Switcher)
+map <leader><leader> <Action>(GotoFile)
+map <leader>n <Action>(NewFile)
+"NerdTree
+noremap <leader>E :NERDTreeToggle<CR>
+noremap <leader>e :NERDTreeFocus<CR>
+
+"" === NAVEGACIÓN ENTRE SPLITS ===
+" Ctrl + hjkl para moverse entre ventanas
+nnoremap <C-h> :action PrevSplitter<CR>
+nnoremap <C-l> :action NextSplitter<CR>
+
+" === CREAR SPLITS ===
+nnoremap <leader>v :action SplitVertically<CR>
+nnoremap <leader>h :action SplitHorizontally<CR>
+nnoremap <leader>ww :action Unsplit<CR>
+nnoremap <leader>wa :action UnsplitAll<CR>
+
+nnoremap <C-w>q :action CloseContent<CR>
+nnoremap <C-w>o :action HideAllWindows<CR>
+nnoremap <C-w>a :action CloseAllEditorsButActive<CR>
+
+" Next Tab and Previous Tab
+nnoremap <S-l> :tabnext<CR>
+nnoremap <S-h> :tabprevious<CR>
+
+"Ocultar todas las ventanas menos el editor
+
+" Save, Quit, etc.
+nnoremap <leader>w :w!<CR>
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>x :x!<CR>
+" Toggle breakpoint
+nnoremap <leader>db :action ToggleLineBreakpoint<CR>
+" Start tomcat
+noremap <leader>Rs :action Run<CR>
+noremap <leader>RS :action Stop<CR>
+
+noremap <leader>Rm :action Maven.ExecuteGoal<CR>
+" Start debugging (Shift+F9 por defecto)
+nnoremap <leader>ds :action Debug<CR>
+
+" Step over (F8)
+nnoremap <leader>do :action StepOver<CR>
+
+" Step into (F7)
+nnoremap <leader>di :action StepInto<CR>
+
+" Step out (Shift+F8)
+
+nnoremap <leader>dO :action StepOut<CR>
+
+" Resume program (F9)
+nnoremap <leader>dr :action Resume<CR>
+
+" Stop debugging (Ctrl+F2)
+nnoremap <leader>ds :action Stop<CR>
+
+" Evaluate expression
+noremap <leader>de :action EvaluateExpression<CR>
+
+" Show debug window
+nnoremap <leader>dw :action DebugToolWindow<CR>
+" Apply HotSwap
+nnoremap <leader>dh :action HotSwap<CR>
+
+" ========== LSP actions (Neovim defaults) ==========
+" Neovim 0.11: grn, grr, gri, gO, grt, gra
+nnoremap grn :action RenameElement<CR>
+nnoremap grr :action ShowUsages<CR>
+nnoremap gri :action GotoImplementation<CR>
+nnoremap gO :action FileStructurePopup<CR>
+nnoremap grt :action GotoTypeDeclaration<CR>
+nnoremap gra :action ShowIntentionActions<CR>
+vnoremap gra :action ShowIntentionActions<CR>
+
+" Alias requested for LSP-style declaration navigation.
+nnoremap grd :action GotoDeclaration<CR>
+
+" Code actions / quick fix
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+vnoremap <leader>ca :action ShowIntentionActions<CR>
+
+" Signature help / parameter info
+inoremap <C-s> <Action>(ParameterInfo)
+
+" ========== REFACTORING (leader-r; gr* reserved for LSP) ==========
+" Rename
+nnoremap <leader>rn :action RenameElement<CR>
+nnoremap <leader>rN :action RenameFile<CR>
+
+" Refactoring menu
+nnoremap <leader>rr :action Refactorings.QuickListPopupAction<CR>
+
+" Extract method / variable
+nnoremap <leader>rm :action ExtractMethod<CR>
+nnoremap <leader>rv :action IntroduceVariable<CR>
+
+" Extract field / parameter / constant
+vnoremap <leader>rf :action IntroduceField<CR>
+vnoremap <leader>rp :action IntroduceParameter<CR>
+vnoremap <leader>rc :action IntroduceConstant<CR>
+
+" Extract superclass / interface
+nnoremap <leader>rS :action ExtractSuperclass<CR>
+nnoremap <leader>rI :action ExtractInterface<CR>
+
+" Inline
+vnoremap <leader>ri :action Inline<CR>
+
+" Move / change signature
+nnoremap <leader>ro :action Move<CR>
+nnoremap <leader>rs :action ChangeSignature<CR>
+
+" Pull up / push down members
+nnoremap <leader>ru :action MembersPullUp<CR>
+nnoremap <leader>rd :action MemberPushDown<CR>
+
+" Safe delete
+nnoremap <leader>rD :action SafeDelete<CR>
+
+" ========== CODE FOLDING ==========
+map <leader>za <Action>(CollapseAllRegions)
+map <leader>zA <Action>(ExpandAllRegions)
+map <leader>zs <Action>(CollapseRegion)
+map <leader>zS <Action>(ExpandRegion)
+map <leader>zr <Action>(CollapseRegionRecursively)
+map <leader>zR <Action>(ExpandRegionRecursively)
+
+" Formatear codigo
+vnoremap <leader>cf :action ReformatCode<CR>
+
+" Organizar imports
+nnoremap <leader>co :action OptimizeImports<CR>
+map <leader>ra <Action>(RearrangeCode)
+
+" Generar codigo (getters, setters, constructors, etc.)
+nnoremap <leader>cg :action Generate<CR>
+
+
+" Errores y advertencias
+nnoremap ]e :action GotoNextError<CR>
+nnoremap [e :action GotoPreviousError<CR>
+" Ir a interfaces y definiciones
+" Pegar y copiar de clipboard
+nnoremap <leader>y :action EditorCopy<CR>
+nnoremap <leader>p :action EditorPaste<CR>
+
+" BOOKMARKS
+
+nnoremap <leader>m :action ToggleBookmarkWithMnemonic<CR>
+
+" Navegar a marcas con <leader> + número
+nnoremap <leader>1 :action GotoBookmark1<CR>
+nnoremap <leader>2 :action GotoBookmark2<CR>
+nnoremap <leader>3 :action GotoBookmark3<CR>
+nnoremap <leader>4 :action GotoBookmark4<CR>
+nnoremap <leader>5 :action GotoBookmark5<CR>
+nnoremap <leader>6 :action GotoBookmark6<CR>
+nnoremap <leader>7 :action GotoBookmark7<CR>
+nnoremap <leader>8 :action GotoBookmark8<CR>
+nnoremap <leader>9 :action GotoBookmark9<CR>
+nnoremap <leader>0 :action GotoBookmark0<CR>
+
+" Bonus: Ver todas las marcas
+nnoremap <leader>mm :action ShowBookmarks<CR>
+
+"Source code Navigations
+map <leader>ug <Action>(FindUsages)
+map <leader>uu <Action>(ShowUsages)
+map <leader>us <Action>(ViewSource)
+map <leader>im <Action>(QuickImplementations)
+"map <leader>td <Action>(QuickTypeDefinition)
+"map <leader>ti <Action>(ExpressionTypeInfo)
+map <leader>K <Action>(ShowHoverInfo)
+map <leader>oo <Action>(FileStructurePopup)
+
+" Find and Replace
+
+
+map <leader>ff <Action>(Find)
+map <leader>fr <Action>(Replace)
+map <leader>/ <Action>(FindInPath)
+map <leader>? <Action>(ReplaceInPath)

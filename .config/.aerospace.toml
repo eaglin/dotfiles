@@ -14,7 +14,7 @@ start-at-login = true
 ## Inactive color grey
 #gradient(top_right=0xff89b4fa,bottom_left=0xff89dceb)
 after-startup-command = [
-  "exec-and-forget borders style='round' width=4 active_color='glow(0xff89b4fa)' inactive_color='0xff454756'",
+  "exec-and-forget borders style='round' width=6 active_color='gradient(top_right=0xffF59E0B,bottom_left=0xffDC2626)' inactive_color='0xff3a3a3a'",
 'exec-and-forget sketchybar'
 ]# Notify Sketchybar about workspace change
 exec-on-workspace-change = ['/bin/bash', '-c',
@@ -65,10 +65,10 @@ if.app-id = 'com.blackmagic-design.DaVinciResolve'
 
 [[on-window-detected]]
 if.app-id = 'com.lemon.lvoverseas'
-    run = 'move-node-to-workspace 2'
+    run = 'move-node-to-workspace 5'
 
 [[on-window-detected]]
-    if.app-id = 'com.apple.Safari'
+    if.app-id = 'com.zenbrowser.zen'
     run = 'move-node-to-workspace 1'
 [[on-window-detected]]
     if.app-id = 'com.apple.Notes'
@@ -112,6 +112,11 @@ if.app-name-regex-substring = 'WhatsApp'
 [[on-window-detected]]
     if.app-id = 'org.pqrs.Karabiner-Elements.Settings'
     run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-name-regex-substring = 'ClipGrab'
+    run = 'layout floating'
+
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 [key-mapping]
@@ -172,6 +177,7 @@ if.app-name-regex-substring = 'WhatsApp'
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-slash = 'layout tiles horizontal vertical'
 
+    alt-t = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
     alt-h = 'focus left'
     alt-j = 'focus down'
@@ -184,7 +190,7 @@ if.app-name-regex-substring = 'WhatsApp'
     alt-shift-k = 'move up'
     alt-shift-l = 'move right'
 
-    alt-shift-f = 'fullscreen --no-outer-gaps'
+    alt-f = 'fullscreen --no-outer-gaps'
     # See: https://nikitabobko.github.io/AeroSpace/commands#resize
     alt-minus = 'resize smart -50'
     alt-equal = 'resize smart +50'
@@ -195,6 +201,11 @@ if.app-name-regex-substring = 'WhatsApp'
     alt-3 = 'workspace 3'
     alt-4 = 'workspace 4'
     alt-5 = 'workspace 5'
+    alt-6 = 'workspace 6'
+    alt-7 = 'workspace 7'
+    alt-8 = 'workspace 8'
+    alt-9 = 'workspace 9'
+    alt-0 = 'workspace 0'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
@@ -207,23 +218,26 @@ if.app-name-regex-substring = 'WhatsApp'
     alt-tab = 'workspace-back-and-forth'
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
     alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
-
+## Minimize and maximize windows
+# alt-m = 'minimize-node'
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-    alt-shift-semicolon = 'mode service'
 cmd-alt-h = []
 cmd-h=[]
-alt-v = 'exec-and-forget open -a "/Applications/Visual Studio Code.app"'
-alt-o = 'exec-and-forget open -a /Applications/OBS.app'
-alt-n = 'exec-and-forget open -a /System/Applications/Notes.app'
-alt-t = 'exec-and-forget open -a /Applications/Telegram.app'
-alt-w = 'exec-and-forget open -a /Applications/WhatsApp.app'
-alt-r = 'exec-and-forget open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"'
-alt-g = 'exec-and-forget open -a /Applications/Ghostty.app'
-alt-c = 'exec-and-forget open -a /Applications/CapCut.app'
-alt-s = 'exec-and-forget open -a /Applications/Safari.app'
-alt-f = 'exec-and-forget open -a /System/Library/CoreServices/Finder.app'
+alt-shift-cmd-ctrl-v = 'exec-and-forget open -a "/Applications/Visual Studio Code.app"'
+alt-shift-cmd-ctrl-o = 'exec-and-forget open -a /Applications/OBS.app'
+alt-shift-cmd-ctrl-n = 'exec-and-forget open -a /System/Applications/Notes.app'
+alt-shift-cmd-ctrl-t = 'exec-and-forget open -a /Applications/Telegram.app'
+alt-shift-cmd-ctrl-w = 'exec-and-forget open -a /Applications/WhatsApp.app'
+alt-shift-cmd-ctrl-r = 'exec-and-forget open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"'
+alt-shift-cmd-ctrl-g = 'exec-and-forget open -a /Applications/Ghostty.app'
+alt-shift-cmd-ctrl-c = 'exec-and-forget open -a /Applications/CapCut.app'
+alt-shift-cmd-ctrl-s = 'exec-and-forget open -a /Applications/Zen Browser.app'
+alt-shift-cmd-ctrl-f = 'exec-and-forget open -a /System/Library/CoreServices/Finder.app'
+#Add to open clipgrab 
+alt-shift-cmd-ctrl-b = 'exec-and-forget open -a /Applications/ClipGrab.app'
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+alt-shift-semicolon = 'mode service'
 [mode.service.binding]
     esc = ['reload-config', 'mode main']
     r = ['flatten-workspace-tree', 'mode main'] # reset layout
@@ -241,3 +255,10 @@ alt-f = 'exec-and-forget open -a /System/Library/CoreServices/Finder.app'
     down = 'volume down'
     up = 'volume up'
     shift-down = ['volume set 0', 'mode main']
+alt-shift-r = 'mode resize'
+[mode.resize.binding]
+    esc = 'mode main'
+    h = 'resize width -50'
+    l = 'resize width +50'
+    k = 'resize height +50'
+    j = 'resize height -50'
