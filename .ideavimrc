@@ -2,15 +2,14 @@
 "   the same commands as the original .vimrc configuration.
 " You can find a list of commands here: https://jb.gg/h38q75
 " Find more examples here: https://jb.gg/share-ideavimrc
-nnoremap <leader>rc :action IdeaVim.ReloadVimRc.reload<CR>
+nnoremap <leader>vr :action IdeaVim.ReloadVimRc.reload<CR>
 
 "" -- Suggested options --
-
 
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
 set scrolloff=5
-set timeoutlen=6000    " 2 segundOc
+set timeoutlen=2000    " 2 segundos
 
 
 " Do incremental searching.
@@ -36,17 +35,11 @@ nnoremap <Esc> :nohlsearch<cr>
 set ignorecase
 " enable case-sensitive search when uppercased letter is present
 set smartcase
-" search while typing
-set incsearch
-set functiontextobj
 set mini-ai
 set which-key
 
-set scrolloff=5
-set incsearch
 set relativenumber
 set number
-syntax on
 
 let mapleader = " "
 " ------------------------------
@@ -123,7 +116,7 @@ nnoremap <leader>dO :action StepOut<CR>
 nnoremap <leader>dr :action Resume<CR>
 
 " Stop debugging (Ctrl+F2)
-nnoremap <leader>ds :action Stop<CR>
+nnoremap <leader>dt :action Stop<CR>
 
 " Evaluate expression
 noremap <leader>de :action EvaluateExpression<CR>

@@ -1,0 +1,50 @@
+#!/bin/sh
+set -eu
+
+focused_workspace="$(
+  aerospace list-workspaces --focused --format '%{workspace}'
+)"
+
+# Prefer a Finder window that is already in the current workspace.
+finder_id="$(
+  aerospace list-windows \
+    --workspace "$focused_workspace" \
+    --app-bundle-id com.apple.finder \
+    --format '%{window-id}' 2>/dev/null |
+    awk 'NR == 1 { print; exit }'
+)"
+
+if [ -z "$finder_id" ]; then
+  # Otherwise reuse a Finder window from another workspace.
+  finder_id="$(
+    aerospace list-windows --all \
+      --format '%{window-id}%{tab}%{app-bundle-id}' 2>/dev/null |
+      awk -F '\t' '$2 == "com.apple.finder" { print $1; exit }'
+  )"
+fi
+
+if [ -z "$finder_id" ]; then
+  # Finder has no windows: create one and wait briefly for AeroSpace to detect it.
+  osascript -e 'tell application "Finder" to make new Finder window to home' >/dev/null
+
+  attempts=0
+  while [ "$attempts" -lt 20 ] && [ -z "$finder_id" ]; do
+    sleep 0.1
+    finder_id="$(
+      aerospace list-windows --all \
+        --format '%{window-id}%{tab}%{app-bundle-id}' 2>/dev/null |
+        awk -F '\t' '$2 == "com.apple.finder" { print $1; exit }'
+    )"
+    attempts=$((attempts + 1))
+  done
+fi
+
+if [ -z "$finder_id" ]; then
+  printf 'Finder window was not detected by AeroSpace\n' >&2
+  exit 1
+fi
+
+# Bring the chosen window here, force it to float, and focus it.
+aerospace move-node-to-workspace --window-id "$finder_id" "$focused_workspace" >/dev/null 2>&1
+aerospace layout --window-id "$finder_id" floating >/dev/null 2>&1
+aerospace focus --window-id "$finder_id" >/dev/null 2>&1

@@ -1,264 +1,151 @@
-# Place a copy of this config to ~/.aerospace.toml
-# After that, you can edit ~/.aerospace.toml to your liking
+# AeroSpace configuration managed in Personal/dotfiles.
+# The active config is ~/.aerospace.toml (symlinked to this file).
+config-version = 2
 
-# You can use it to add commands that run after login to macOS user session.
-# 'start-at-login' needs to be 'true' for 'after-login-command' to work
-# Available commands: https:4/nikitabobko.github.io/AeroSpace/commands
-after-login-command = []
-
-# You can use it to add commands that run after AeroSpace startup.
-# 'after-startup-command' is run after 'after-login-command'
-# Available commands : https://nikitabobko.github.io/AeroSpace/commands
-# Start AeroSpace at login
+# Start AeroSpace at login.
 start-at-login = true
-## Inactive color grey
-#gradient(top_right=0xff89b4fa,bottom_left=0xff89dceb)
+after-login-command = []
 after-startup-command = [
-  "exec-and-forget borders style='round' width=6 active_color='gradient(top_right=0xffF59E0B,bottom_left=0xffDC2626)' inactive_color='0xff3a3a3a'",
-'exec-and-forget sketchybar'
-]# Notify Sketchybar about workspace change
-exec-on-workspace-change = ['/bin/bash', '-c',
-    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+  "exec-and-forget borders style='round' width=5 active_color='0xff00d9ff' inactive_color='0xff26233a'",
+  "layout --workspace 5 --root accordion"
 ]
-# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
+
+# Notify SketchyBar, if it is installed, about workspace changes.
+exec-on-workspace-change = ['/bin/bash', '-c',
+  'command -v sketchybar >/dev/null 2>&1 && sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
+# Match yabai's bsp defaults.
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
-
-# [[on-window-detected]]
-# if.app-name-regex-substring = 'finder'
-# run = 'layout floating'
-
-#
-# See: https://nikitabobko.github.io/AeroSpace/guide#layouts
-# The 'accordion-padding' specifies the size of accordion padding
-# You can set 0 to disable the padding feature
 accordion-padding = 10
-
-# Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
-
-# Possible values: horizontal|vertical|auto
-# 'auto' means:a wide monitor (anything wider than high) gets horizontal orientation,
-#               tall monitor (anything higher than wide) gets vertical orientation
 default-root-container-orientation = 'auto'
-
-# Mouse follows focus when focused monitor changes
-# Drop it from your config, if you don't like this behavior
-# See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
-# See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
-# Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-
-on-focus-changed = [ "exec-and-forget sketchybar --trigger aerospace_workspace_change"]
-# You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
-# Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
-# Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
+on-focus-changed = ["exec-and-forget command -v sketchybar >/dev/null 2>&1 && sketchybar --trigger aerospace_workspace_change"]
 automatically-unhide-macos-hidden-apps = true
 
-[[on-window-detected]]
-    if.app-id = 'com.mitchellh.ghostty'
-    run =  'move-node-to-workspace 3' 
-
-[[on-window-detected]]
-if.app-id = 'com.blackmagic-design.DaVinciResolve'
-    run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
-if.app-id = 'com.lemon.lvoverseas'
-    run = 'move-node-to-workspace 5'
-
-[[on-window-detected]]
-    if.app-id = 'com.zenbrowser.zen'
-    run = 'move-node-to-workspace 1'
-[[on-window-detected]]
-    if.app-id = 'com.apple.Notes'
-    run =  ['layout floating', 'move-node-to-workspace 1']
-[[on-window-detected]]
-    if.app-id = 'com.google.Chrome'
-    run =  'move-node-to-workspace 1'
-[[on-window-detected]]
-    if.app-id = 'com.microsoft.VSCode'
-    run =  'move-node-to-workspace 3'
-
-[[on-window-detected]]
-    if.app-id = 'com.obsproject.obs-studio'
-    run =  ['layout floating', 'move-node-to-workspace 1' ]
-
-[[on-window-detected]]
-    if.app-id = 'com.lwks.Ghostty'
-    run =  'move-node-to-workspace 3'
-
-[[on-window-detected]]
-    if.app-id = 'com.apple.finder'
-    run = ['layout floating']
-
-[[on-window-detected]]
-    if.app-id = 'com.microsoft.teams2'
-    run = ['layout floating']
-[[on-window-detected]]
-    if.app-id = 'com.tdesktop.Telegram'
-    run = 'layout floating'
-[[on-window-detected]]
-    if.app-id = 'com.mongodb.compass'
-    run = 'layout floating'
-
-[[on-window-detected]]
-    if.app-id = 'com.docker.docker'
-    run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'WhatsApp'
-    run = 'layout floating'
-[[on-window-detected]]
-    if.app-id = 'org.pqrs.Karabiner-Elements.Settings'
-    run = 'layout floating'
-
-[[on-window-detected]]
-    if.app-name-regex-substring = 'ClipGrab'
-    run = 'layout floating'
-
-# Possible values: (qwerty|dvorak|colemak)
-# See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
-[key-mapping]
-    preset = 'qwerty'
-
-# Gaps between windows (inner-*) and between monitor edges (outer-*).
-# Possible values:
-# - Constant:     gaps.outer.top = 8
-# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."" = 32 }, 24]
-#                 In this example, 24 is a default value when there is no match.
-#                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
-#                 See:
-#                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+# Gaps match .yabairc.
 [gaps]
-    inner.horizontal = 10
-    inner.vertical =   10
-    outer.left =       10
-    outer.bottom =     10
-    outer.top =[ { monitor."^built-in retina display$" = 15}, 45]
-    outer.right =     10 
+  inner.horizontal = 10
+  inner.vertical = 10
+  outer.left = 10
+  outer.bottom = 10
+  outer.top = 10
+  outer.right = 10
 
+# Match yabai app-to-space rules and per-space layouts.
+[[on-window-detected]]
+  if = 'test %{app-bundle-id} = com.zenbrowser.zen || test %{app-bundle-id} = com.google.Chrome'
+  run = 'move-node-to-workspace 1'
 
-# Override SOLO para la pantalla integrada del Mac
-# Cambia el nombre si tu integrada se llama distinto
-# 'main' binding mode declaration
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
-# 'main' binding mode must be always presented
-# Fallback value (if you omit the key): mode.main.binding = {}
+[[on-window-detected]]
+  if = 'test %{app-bundle-id} = com.mitchellh.ghostty'
+  run = ['move-node-to-workspace 2', 'layout floating']
+
+[[on-window-detected]]
+  if = 'test %{app-bundle-id} ~= com.jetbrains.intellij || test %{app-bundle-id} = com.apple.dt.Xcode'
+  run = ['move-node-to-workspace 3', 'layout floating']
+
+[[on-window-detected]]
+  if = 'test %{app-bundle-id} = com.obsproject.obs-studio || test %{app-bundle-id} = com.lemon.lvoverseas || test %{app-bundle-id} = com.blackmagic-design.DaVinciResolve || test %{app-name} ~= ClipGrab || test %{app-name} ~= Blackmagic'
+  run = ['move-node-to-workspace 4', 'layout floating']
+
+[[on-window-detected]]
+  if = 'test %{app-bundle-id} = com.apple.Notes || test %{app-bundle-id} = com.microsoft.Word || test %{app-bundle-id} = com.microsoft.Excel || test %{app-bundle-id} = com.microsoft.Outlook || test %{app-bundle-id} = com.microsoft.teams2 || test %{app-name} ~= WhatsApp || test %{app-bundle-id} = com.docker.docker'
+  run = ['move-node-to-workspace 5', 'layout accordion']
+
+# Utility windows stay floating and under macOS control, like manage=off in yabai.
+[[on-window-detected]]
+  if = 'test %{app-bundle-id} = com.apple.finder || test %{app-bundle-id} = com.apple.systempreferences || test %{app-bundle-id} = org.pqrs.Karabiner-Elements.Settings || test %{app-bundle-id} = org.pqrs.Karabiner-Elements'
+  run = 'layout floating'
+
+# Keybindings preserve the yabai/skhd shortcuts.
+[key-mapping]
+  preset = 'qwerty'
+
 [mode.main.binding]
+  # Focus windows.
+  alt-h = 'focus left'
+  alt-j = 'focus down'
+  alt-k = 'focus up'
+  alt-l = 'focus right'
 
-    # All possible keys:
-    # - Letters.        a, b, c, ..., z
-    # - Numbers.        0, 1, 2, ..., 9
-    # - Keypad numbers. keypad0, keypad1, keypad2, ..., keypad9
-    # - F-keys.         f1, f2, ..., f20
-    # - Special keys.   minus, equal, period, comma, slash, backslash, quote, semicolon,
-    #                   backtick, leftSquareBracket, rightSquareBracket, space, enter, esc,
-    #                   backspace, tab, pageUp, pageDown, home, end, forwardDelete,
-    #                   sectionSign (ISO keyboards only, european keyboards only)
-    # - Keypad special. keypadClear, keypadDecimalMark, keypadDivide, keypadEnter, keypadEqual,
-    #                   keypadMinus, keypadMultiply, keypadPlus
-    # - Arrows.         left, down, up, right
+  # Reorder windows (the closest AeroSpace equivalent to yabai --swap).
+  alt-shift-h = 'swap left'
+  alt-shift-j = 'swap down'
+  alt-shift-k = 'swap up'
+  alt-shift-l = 'swap right'
 
-    # All possible modifiers: cmd, alt, ctrl, shift
+  # Window controls.
+  alt-q = 'close'
+  alt-f = 'fullscreen --no-outer-gaps'
+  alt-shift-f = 'layout floating tiling'
 
-    # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
+  # Resize: comma/period and ]/O preserve skhd keycodes 0x2B/0x2F and 0x1E/0x1F.
+  alt-shift-comma = 'resize width -50'
+  alt-shift-period = 'resize width +50'
+  alt-shift-rightSquareBracket = 'resize height -50'
+  alt-shift-o = 'resize height +50'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
-    # You can uncomment the following lines to open up terminal with alt + enter shortcut
-    # (like in i3)
-    # alt-enter = '''exec-and-forget osascript -e '
-    # tell application "Terminal"
-    #     do script
-    #     activate
-    # end tell'
-    # '''
+  # Space layouts: bsp -> tiles, stack -> accordion, float -> floating.
+  alt-ctrl-space = 'layout tiles accordion floating'
+  alt-ctrl-t = 'layout tiles'
+  alt-ctrl-s = 'layout accordion'
+  alt-ctrl-f = 'layout floating'
+  alt-ctrl- = 'balance-sizes'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-    alt-slash = 'layout tiles horizontal vertical'
+  # Focus spaces.
+  alt-1 = 'workspace 1'
+  alt-2 = 'workspace 2'
+  alt-3 = 'workspace 3'
+  alt-4 = 'workspace 4'
+  alt-5 = 'workspace 5'
+  alt-tab = 'workspace-back-and-forth'
 
-    alt-t = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
-    # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-    alt-h = 'focus left'
-    alt-j = 'focus down'
-    alt-k = 'focus up'
-    alt-l = 'focus right'
+  # Move the focused window and follow it.
+  alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
+  alt-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
+  alt-shift-3 = ['move-node-to-workspace 3', 'workspace 3']
+  alt-shift-4 = ['move-node-to-workspace 4', 'workspace 4']
+  alt-shift-5 = ['move-node-to-workspace 5', 'workspace 5']
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move
-    alt-shift-h = 'move left'
-    alt-shift-j = 'move down'
-    alt-shift-k = 'move up'
-    alt-shift-l = 'move right'
+  # App launchers; destinations match the yabai rules.
+  alt-shift-cmd-ctrl-o = 'exec-and-forget open -a "/Applications/OBS.app"'
+  alt-shift-cmd-ctrl-n = 'exec-and-forget open -a "/System/Applications/Notes.app"'
+  alt-shift-cmd-ctrl-w = 'exec-and-forget open -a "/Applications/WhatsApp.app"'
+  alt-shift-cmd-ctrl-r = 'exec-and-forget open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"'
+  alt-shift-cmd-ctrl-g = 'exec-and-forget open -a "/Applications/Ghostty.app"'
+  alt-shift-cmd-ctrl-i = 'exec-and-forget open -a "IntelliJ IDEA"'
+  alt-shift-cmd-ctrl-c = 'exec-and-forget open -a "/Applications/CapCut.app"'
+  alt-shift-cmd-ctrl-s = 'exec-and-forget open -a "/Applications/Google Chrome.app"'
+  alt-shift-cmd-ctrl-f = 'exec-and-forget "$HOME/.local/bin/finder-here"'
 
-    alt-f = 'fullscreen --no-outer-gaps'
-    # See: https://nikitabobko.github.io/AeroSpace/commands#resize
-    alt-minus = 'resize smart -50'
-    alt-equal = 'resize smart +50'
+  # Existing extra launchers from the Aerospace config.
+  alt-shift-cmd-ctrl-v = 'exec-and-forget open -a "/Applications/Visual Studio Code.app"'
+  alt-shift-cmd-ctrl-t = 'exec-and-forget open -a "/Applications/Telegram.app"'
+  alt-shift-cmd-ctrl-b = 'exec-and-forget open -a "/Applications/ClipGrab.app"'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-1 = 'workspace 1'
-    alt-2 = 'workspace 2'
-    alt-3 = 'workspace 3'
-    alt-4 = 'workspace 4'
-    alt-5 = 'workspace 5'
-    alt-6 = 'workspace 6'
-    alt-7 = 'workspace 7'
-    alt-8 = 'workspace 8'
-    alt-9 = 'workspace 9'
-    alt-0 = 'workspace 0'
+  # Preserve the existing service/resize modes.
+  alt-shift-semicolon = 'mode service'
+  alt-shift-r = 'mode resize'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
-    alt-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
-    alt-shift-3 = ['move-node-to-workspace 3', 'workspace 3']
-    alt-shift-4 = ['move-node-to-workspace 4', 'workspace 4']
-    alt-shift-5 = ['move-node-to-workspace 5', 'workspace 5']
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-    alt-tab = 'workspace-back-and-forth'
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
-    alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
-## Minimize and maximize windows
-# alt-m = 'minimize-node'
-    # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-cmd-alt-h = []
-cmd-h=[]
-alt-shift-cmd-ctrl-v = 'exec-and-forget open -a "/Applications/Visual Studio Code.app"'
-alt-shift-cmd-ctrl-o = 'exec-and-forget open -a /Applications/OBS.app'
-alt-shift-cmd-ctrl-n = 'exec-and-forget open -a /System/Applications/Notes.app'
-alt-shift-cmd-ctrl-t = 'exec-and-forget open -a /Applications/Telegram.app'
-alt-shift-cmd-ctrl-w = 'exec-and-forget open -a /Applications/WhatsApp.app'
-alt-shift-cmd-ctrl-r = 'exec-and-forget open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"'
-alt-shift-cmd-ctrl-g = 'exec-and-forget open -a /Applications/Ghostty.app'
-alt-shift-cmd-ctrl-c = 'exec-and-forget open -a /Applications/CapCut.app'
-alt-shift-cmd-ctrl-s = 'exec-and-forget open -a /Applications/Zen Browser.app'
-alt-shift-cmd-ctrl-f = 'exec-and-forget open -a /System/Library/CoreServices/Finder.app'
-#Add to open clipgrab 
-alt-shift-cmd-ctrl-b = 'exec-and-forget open -a /Applications/ClipGrab.app'
-# 'service' binding mode declaration.
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
-alt-shift-semicolon = 'mode service'
 [mode.service.binding]
-    esc = ['reload-config', 'mode main']
-    r = ['flatten-workspace-tree', 'mode main'] # reset layout
-    f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
-    backspace = ['close-all-windows-but-current', 'mode main']
+  esc = ['reload-config', 'mode main']
+  r = ['flatten-workspace-tree', 'mode main']
+  f = ['layout floating tiling', 'mode main']
+  backspace = ['close-all-windows-but-current', 'mode main']
+  alt-shift-h = ['join-with left', 'mode main']
+  alt-shift-j = ['join-with down', 'mode main']
+  alt-shift-k = ['join-with up', 'mode main']
+  alt-shift-l = ['join-with right', 'mode main']
+  down = 'volume down'
+  up = 'volume up'
+  shift-down = ['volume set 0', 'mode main']
 
-    # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
-    #s = ['layout sticky tiling', 'mode main']
-
-    alt-shift-h = ['join-with left', 'mode main']
-    alt-shift-j = ['join-with down', 'mode main']
-    alt-shift-k = ['join-with up', 'mode main']
-    alt-shift-l = ['join-with right', 'mode main']
-
-    down = 'volume down'
-    up = 'volume up'
-    shift-down = ['volume set 0', 'mode main']
-alt-shift-r = 'mode resize'
 [mode.resize.binding]
-    esc = 'mode main'
-    h = 'resize width -50'
-    l = 'resize width +50'
-    k = 'resize height +50'
-    j = 'resize height -50'
+  esc = 'mode main'
+  h = 'resize width -50'
+  l = 'resize width +50'
+  k = 'resize height +50'
+  j = 'resize height -50'

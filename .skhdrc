@@ -1,8 +1,8 @@
-# Focus windows. prev/next keeps navigation working in stack layouts.
-alt - h : yabai -m window --focus west  || yabai -m window --focus prev
-alt - j : yabai -m window --focus south || yabai -m window --focus next
-alt - k : yabai -m window --focus north || yabai -m window --focus prev
-alt - l : yabai -m window --focus east  || yabai -m window --focus next
+# Focus windows. Stack selectors cycle through overlapping windows.
+alt - h : yabai -m window --focus west  || yabai -m window --focus stack.prev || yabai -m window --focus stack.last  || yabai -m window --focus prev
+alt - j : yabai -m window --focus south || yabai -m window --focus stack.next || yabai -m window --focus stack.first || yabai -m window --focus next
+alt - k : yabai -m window --focus north || yabai -m window --focus stack.prev || yabai -m window --focus stack.last  || yabai -m window --focus prev
+alt - l : yabai -m window --focus east  || yabai -m window --focus stack.next || yabai -m window --focus stack.first || yabai -m window --focus next
 
 # Reorder windows.
 alt + shift - h : yabai -m window --swap west  || yabai -m window --swap prev
@@ -11,16 +11,20 @@ alt + shift - k : yabai -m window --swap north || yabai -m window --swap prev
 alt + shift - l : yabai -m window --swap east  || yabai -m window --swap next
 
 # Window controls.
-alt - f : yabai -m window --toggle zoom-fullscreen
+alt - f : if [ "$(yabai -m query --spaces --space | jq -r '.type')" = "float" ] || yabai -m query --windows --window | jq -e '."is-floating"' >/dev/null; then yabai -m window --toggle windowed-fullscreen; else yabai -m window --toggle zoom-fullscreen; fi
 alt + shift - f : yabai -m window --toggle float && if yabai -m query --windows --window | jq -e '."is-floating"' >/dev/null; then yabai -m window --grid 4:4:1:1:2:2; fi
+# Window resize (horizontal).
 alt + shift - 0x2B : yabai -m window --resize left:-50:0 || yabai -m window --resize right:-50:0
 alt + shift - 0x2F : yabai -m window --resize left:50:0 || yabai -m window --resize right:50:0
+# Window resize (vertical).
+alt + shift - 0x1E : yabai -m window --resize top:0:-50:0 || yabai -m window --resize bottom:0:-50:0
+alt + shift - 0x1F : yabai -m window --resize top:0:50:0 || yabai -m window --resize bottom:0:50:0
 
 # Space layouts.
-alt + ctrl - 0x31 : yabai -m space --layout $(yabai -m query --spaces --space | jq -r '.type | if . == "bsp" then "stack" elif . == "stack" then "float" else "bsp" end'); sketchybar --trigger yabai_layout_change
-alt + ctrl - b : yabai -m space --layout bsp; sketchybar --trigger yabai_layout_change
-alt + ctrl - s : yabai -m space --layout stack; sketchybar --trigger yabai_layout_change
-alt + ctrl - f : yabai -m space --layout float; sketchybar --trigger yabai_layout_change
+alt + ctrl - 0x31 : yabai -m space --layout $(yabai -m query --spaces --space | jq -r '.type | if . == "bsp" then "stack" elif . == "stack" then "float" else "bsp" end')
+alt + ctrl - b : yabai -m space --layout bsp
+alt + ctrl - s : yabai -m space --layout stack
+alt + ctrl - f : yabai -m space --layout float
 alt + ctrl - r : yabai -m space --balance
 
 # Focus Spaces.
@@ -49,11 +53,12 @@ alt + shift - 9 : yabai -m window --space 9 && skhd -k "ctrl - 9"
 
 # App launchers.
 ctrl + alt + cmd + shift - o : skhd -k "ctrl - 4"; open -a "/Applications/OBS.app"
-ctrl + alt + cmd + shift - n : skhd -k "ctrl - 1"; open -a "/System/Applications/Notes.app"
-ctrl + alt + cmd + shift - w : skhd -k "ctrl - 7"; open -a "/Applications/WhatsApp.app"
-ctrl + alt + cmd + shift - r : skhd -k "ctrl - 6"; open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"
+ctrl + alt + cmd + shift - n : skhd -k "ctrl - 5"; open -a "/System/Applications/Notes.app"
+ctrl + alt + cmd + shift - w : skhd -k "ctrl - 5"; open -a "/Applications/WhatsApp.app"
+ctrl + alt + cmd + shift - r : skhd -k "ctrl - 4"; open -a "/Applications/DaVinci Resolve/DaVinci Resolve.app"
 ctrl + alt + cmd + shift - g : skhd -k "ctrl - 2"; open -a "/Applications/Ghostty.app"
 ctrl + alt + cmd + shift - i : skhd -k "ctrl - 3"; open -a "IntelliJ IDEA"
-ctrl + alt + cmd + shift - c : skhd -k "ctrl - 5"; open -a "/Applications/CapCut.app"
+ctrl + alt + cmd + shift - c : skhd -k "ctrl - 4"; open -a "/Applications/CapCut.app"
 ctrl + alt + cmd + shift - s : skhd -k "ctrl - 1"; open -a "/Applications/Google Chrome.app"
-ctrl + alt + cmd + shift - f : open -a "/System/Library/CoreServices/Finder.app"
+# Focus Finder in this Space; create a window only when this Space has none.
+ctrl + alt + cmd + shift - f : $HOME/.local/bin/finder-here

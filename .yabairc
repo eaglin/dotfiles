@@ -1,25 +1,26 @@
 #!/usr/bin/env sh
 
-# Predictable default: every Space starts tiled and can be changed from skhd.
+# Global fallback; role-specific Spaces override this below.
 yabai -m config \
   layout bsp \
-  split_type auto \
   window_placement second_child \
-  auto_balance off \
   window_gap 10 \
-  top_padding 0 \
+  top_padding 10 \
   bottom_padding 10 \
   left_padding 10 \
   right_padding 10 \
-  external_bar all:40:0 \
-  focus_follows_mouse off \
-  mouse_follows_focus off \
-  mouse_modifier fn \
   mouse_action1 move \
   mouse_action2 resize \
   mouse_drop_action swap
 
-# Highlight the focused window.
+# Per-Space default layouts.
+yabai -m config --space 2 layout float
+yabai -m config --space 3 layout float
+yabai -m config --space 4 layout float
+yabai -m config --space 5 layout stack
+
+# Highlight the focused window (JankyBorders — required because
+# native yabai borders need the scripting addition / SIP disabled).
 killall borders >/dev/null 2>&1
 borders \
   active_color=0xff00d9ff \
@@ -29,35 +30,41 @@ borders \
   ax_focus=on \
   blacklist="System Settings,Karabiner-Elements" &
 
-# Browsers and general apps.
+# Browsers.
 yabai -m rule --add app="^Zen$" space=1
 yabai -m rule --add app="^Google Chrome$" space=1
-yabai -m rule --add app="^Notes$" space=1 manage=off
 
 # Development.
 yabai -m rule --add app="^Ghostty$" space=2
 yabai -m rule --add app="^IntelliJ IDEA" space=3
+yabai -m rule --add label=development-xcode app="^Xcode$" space=3
 
 # Content creation.
-yabai -m rule --add app="^OBS Studio$" space=4 manage=off
-yabai -m rule --add app="^ClipGrab$" space=4 manage=off
-yabai -m rule --add app="^CapCut$" space=5 manage=off
-yabai -m rule --add app="^DaVinci Resolve$" space=6 manage=off
+yabai -m rule --add label=media-obs app="^OBS( Studio)?$" space=4 manage=off
+yabai -m rule --add label=media-clipgrab app="^ClipGrab$" space=4 manage=off
+yabai -m rule --add label=media-capcut app="^CapCut$" space=4 manage=off
+yabai -m rule --add label=media-davinci app="^DaVinci Resolve$" space=4 manage=off
+yabai -m rule --add label=media-blackmagic app="^Blackmagic " space=4 manage=off
 
-# Communication and infrastructure.
-yabai -m rule --add app="^Docker Desktop$" space=8 manage=off
-yabai -m rule --add app="^Microsoft Teams$" space=7 manage=off
+# Communication, productivity, and infrastructure apps share the stack on Space 5.
+yabai -m rule --add label=productivity-notes app="^Notes$" space=5
+yabai -m rule --add label=productivity-word app="^Microsoft Word$" space=5
+yabai -m rule --add label=productivity-excel app="^Microsoft Excel$" space=5
+yabai -m rule --add label=communication-outlook app="^Microsoft Outlook$" space=5
+yabai -m rule --add label=communication-teams app="^Microsoft Teams" space=5
 # WhatsApp's accessibility name can contain an invisible prefix.
-yabai -m rule --add app="WhatsApp$" space=7 manage=off
+yabai -m rule --add label=communication-whatsapp app="WhatsApp$" space=5
+yabai -m rule --add label=infrastructure-docker app="^Docker Desktop$" space=5
 
 # Utility windows should stay under macOS control.
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^(System Settings|Ajustes del Sistema)$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
 
-# Keep inactive Space indicators synchronized. SketchyBar handles Space and
-# focus changes through its rate-limited native events.
-yabai -m signal --add label=sketchybar_window_created event=window_created action="sketchybar --trigger yabai_space_change"
-yabai -m signal --add label=sketchybar_window_destroyed event=window_destroyed action="sketchybar --trigger yabai_space_change"
+# Focus the first window when entering a space.
+yabai -m signal --add event=space_changed action="yabai -m window --focus first 2>/dev/null"
 
-sketchybar --reload >/dev/null 2>&1 &
+# SketchyBar integration (disabled — install sketchybar to enable).
+# yabai -m signal --add label=sketchybar_window_created event=window_created action="sketchybar --trigger yabai_space_change"
+# yabai -m signal --add label=sketchybar_window_destroyed event=window_destroyed action="sketchybar --trigger yabai_space_change"
+# sketchybar --reload >/dev/null 2>&1 &

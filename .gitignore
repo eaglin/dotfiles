@@ -1,0 +1,17 @@
+.DS_Store
+
+# Herdr runtime state and logs
+.config/herdr/*.log
+.config/herdr/*.sock
+.config/herdr/*.lock
+.config/herdr/*.json
+!.config/herdr/config.toml
+
+# Pi runtime state and credentials
+.pi/agent/auth.json
+.pi/agent/trust.json
+.pi/agent/models-store.json
+.pi/agent/sessions/
+.pi/agent/npm/
+.pi/agent/git/
+.pi/agent/bin/
